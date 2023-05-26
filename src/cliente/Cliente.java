@@ -1,13 +1,17 @@
 package cliente;
 
 import java.util.Calendar;
+import java.util.Vector;
+
+import compras.Compras;
+import vendas.Vendas;
 
 public class Cliente {
 	private int id;
 	private String nome;
 	private Calendar data_criacao;
 	private int telefone;
-	private Vendas compras = null;
+	private Vector compras;
 
 	public int getId() {
 		return id;
@@ -41,18 +45,23 @@ public class Cliente {
 		this.telefone = telefone;
 	}
 
-	public Vendas getCompras() {
+	public Vector getCompras() {
 		return compras;
 	}
 
-	public void setCompras(Vendas compras) {
+	public void setCompras(Vector compras) {
 		this.compras = compras;
 	}
 
+	public String imprimeCompra() {
+		//STRING DAS COMPRAS com dados das compras?
+		return "";
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return super.toString();
 	}
+	
 
 }
