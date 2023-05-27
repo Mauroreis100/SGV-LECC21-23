@@ -1,4 +1,4 @@
-package cliente;
+package compras;
 
 public class Compras {
 
