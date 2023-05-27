@@ -1,4 +1,4 @@
-package vendas;
+package cliente;
 
 public class Vendas {
 
