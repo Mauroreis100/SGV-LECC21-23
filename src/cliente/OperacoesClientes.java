@@ -57,6 +57,7 @@ public class OperacoesClientes {
 	return false;
 	}
 	
+	
 	public void imprimirClientes(Vector lista) {
 		for (int i = 0; i < lista.size(); i++) {
 			

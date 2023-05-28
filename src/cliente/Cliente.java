@@ -12,6 +12,13 @@ public class Cliente {
 	private Calendar data_criacao;
 	private int telefone;
 	private Vector compras;
+	public Cliente() {}
+	public Cliente(int id, String nome, int telefone, Vector compras) {
+		this.id = id;
+		this.nome = nome;
+		this.telefone = telefone;
+		this.compras=compras;
+	}
 
 	public int getId() {
 		return id;
@@ -59,7 +66,7 @@ public class Cliente {
 	}
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
+	
 		return super.toString();
 	}
 	
