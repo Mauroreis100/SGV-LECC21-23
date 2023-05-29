@@ -1,23 +1,42 @@
 package cliente;
 
-import java.util.Calendar;
 import java.util.Vector;
 
-import compras.Compras;
-import vendas.Vendas;
+import carrinho.Carrinho;
 
 public class Cliente {
+
 	private int id;
-	private String nome;
-	private Calendar data_criacao;
-	private int telefone;
+	private String nome, bi;
+	private Carrinho compra;
 	private Vector compras;
-	public Cliente() {}
-	public Cliente(int id, String nome, int telefone, Vector compras) {
+
+	/*
+	 * O cliente tem um vector de todas as compras já feitas Caso tenha de recuperar
+	 * ou iniicializar pela primeira vez, este construtor leva o vector, vazio ou
+	 * não
+	 */
+	public Cliente(int id, String bi, String nome, Carrinho compra) {
 		this.id = id;
+		this.bi = bi;
 		this.nome = nome;
-		this.telefone = telefone;
-		this.compras=compras;
+		this.compra = compra;
+	}
+
+	public Carrinho getCompra() {
+		return compra;
+	}
+
+	public void setCompra(Carrinho compra) {
+		this.compra = compra;
+	}
+
+	public String getBi() {
+		return bi;
+	}
+
+	public void setBi(String bi) {
+		this.bi = bi;
 	}
 
 	public int getId() {
@@ -36,22 +55,6 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public Calendar getData_criacao() {
-		return data_criacao;
-	}
-
-	public void setData_criacao(Calendar data_criacao) {
-		this.data_criacao = data_criacao;
-	}
-
-	public int getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(int telefone) {
-		this.telefone = telefone;
-	}
-
 	public Vector getCompras() {
 		return compras;
 	}
@@ -60,15 +63,9 @@ public class Cliente {
 		this.compras = compras;
 	}
 
-	public String imprimeCompra() {
-		//STRING DAS COMPRAS com dados das compras?
-		return "";
-	}
 	@Override
 	public String toString() {
-	
-		return super.toString();
+		return "Cliente [id=" + id + ", nome=" + nome + ", compras=" + compras + "]";
 	}
-	
 
 }
