@@ -16,8 +16,7 @@ import cliente.*;
 public class Main {
 
 	public static void main(String[] args) {
-		
-		
+
 		// Instância Vector dos Clientes (Eventualmente deve recuperar do ficheiro de
 		// texto)
 		Vector clientes = new Vector();
@@ -29,9 +28,6 @@ public class Main {
 		// Instância Vector dos Produtos no Stock. (Eventualmente deve recuperar do
 		// ficheiro de texto)
 		Vector stock = new Vector();
-		
-	
-				
 
 		// Instância de Operações do Vector Clientes
 		OperecoesCliente opCliente = new OperecoesCliente();
@@ -42,76 +38,72 @@ public class Main {
 		// Instância de Operações do Stock
 		Stock armazem = new Stock();
 
-		//Instância de operações comuns
-		OperacoesVitais opVitais=new OperacoesVitais();
-		
-		
-		//Recuperação de produtos do ficheiro de texto
-		//Recuperando o que já tem
-		
-		String caminhoProduto="Produtos\\ProdutosDB.txt";
-		File fileProdutos=new File(caminhoProduto);
-		if(fileProdutos.length()!=0) {
-			stock=(Vector)opVitais.recuperarObjecto(caminhoProduto);
+		// Instância de operações comuns
+		OperacoesVitais opVitais = new OperacoesVitais();
+
+		// Recuperação de produtos do ficheiro de texto
+		// Recuperando o que já tem
+
+		String caminhoProduto = "Produtos\\ProdutosDB.txt";
+		File fileProdutos = new File(caminhoProduto);
+		if (fileProdutos.length() != 0) {
+			stock = (Vector) opVitais.recuperarObjecto(caminhoProduto);
 		}
-		
+
 		/*
 		 * Vector stockRecuperado=(Vector)opVitais.recuperarObjecto(caminhoProduto);
 		 * System.out.println(stockRecuperado.toString());
 		 */
 		Scanner ler = new Scanner(System.in);
-		
+
 		Random aleatorio = new Random();
 
 		int operacao;
-		int id;//Usando variavel id para todos requisitos
+		int id;// Usando variavel id para todos requisitos
 		do {// OPERAÇÕES PRINCIPAL E TELA DE BEM-VINDO
 			System.out.println(
 					"BEM VINDO A LOJA XXXXXX\n SELECCIONE A SUA OPÇÃO\n1.Comprar\n2. Mais Opções(Cliente/Produto/Vendas)\n0. SAIR\n>>>");
 			operacao = ler.nextInt();
-			int procuraID=-1;
-			int procuraCodigo=-1;
+			int procuraID = -1;
+			int procuraCodigo = -1;
 			switch (operacao) {
 			case 1:
 				System.out.println("\nIDENTIFIQUE-SE USANDO O CÓDIGO LECC");
-				//int identificacao=ler.nextInt();
-				int codeLECC=ler.nextInt();
-				 procuraCodigo=opCliente.procuraID(clientes, codeLECC);
-				 if(procuraCodigo!=-1) {					
-						int opcoesCarrinho;
-						do {
-							System.out.println("CARRINHO\n1. Adicionar produto no carrinho\n2. Remover Produto do carrinho\n3. Ver produtos no carrinho\n\n4. Ver produtos disponíveis\n5. Finalizar Compra\n0. CANCELAR\n>>>");
-							opcoesCarrinho=ler.nextInt();
-							Carrinho cart=new Carrinho(carrinho);
-							switch(opcoesCarrinho) {
-							case 1:
-								//Instancia do carrinho cheio de produtos
-								System.out.println("Qual é o código do produto que pretende adicionar no carrinho?");
-								int codProd=ler.nextInt();
-								if(armazem.procurarCodigo(stock, codProd)!=-1) {
-									Produto encontrado=(Produto)stock.get(armazem.procurarCodigo(stock, codProd));
-									System.out.println("E qual é a quantidade de "+((Produto)stock.get(armazem.procurarCodigo(stock, codProd))).getNome()+" que pretende adicionar ao carrinho?");
-									int quantidade=ler.nextInt();
-									operacoesCart.adicionarProduto(encontrado, cart,quantidade);
-								}
-								
-								break;
-							case 3:
-								System.out.println("ITENS DO CARRINHO");
-								operacoesCart.listarItensCarrinho(cart);
-								break;
+				// int identificacao=ler.nextInt();
+				int codeLECC = ler.nextInt();
+				procuraCodigo = opCliente.procuraID(clientes, codeLECC);
+				if (procuraCodigo != -1) {
+					int opcoesCarrinho;
+					do {
+						System.out.println(
+								"CARRINHO\n1. Adicionar produto no carrinho\n2. Remover Produto do carrinho\n3. Ver produtos no carrinho\n\n4. Ver produtos disponíveis\n5. Finalizar Compra\n0. CANCELAR\n>>>");
+						opcoesCarrinho = ler.nextInt();
+						Carrinho cart = new Carrinho(carrinho);
+						switch (opcoesCarrinho) {
+						case 1:
+							// Instancia do carrinho cheio de produtos
+							System.out.println("Qual é o código do produto que pretende adicionar no carrinho?");
+							int codProd = ler.nextInt();
+							if (armazem.procurarCodigo(stock, codProd) != -1) {
+								Produto encontrado = (Produto) stock.get(armazem.procurarCodigo(stock, codProd));
+								System.out.println("E qual é a quantidade de "
+										+ ((Produto) stock.get(armazem.procurarCodigo(stock, codProd))).getNome()
+										+ " que pretende adicionar ao carrinho?");
+								int quantidade = ler.nextInt();
+								operacoesCart.adicionarProduto(encontrado, cart, quantidade);
 							}
-						}while(opcoesCarrinho!=0);
-					}
-				
-				int escolha=ler.nextInt();
-				
-					
-				
-				
-				
-				
-				
+
+							break;
+						case 3:
+							System.out.println("ITENS DO CARRINHO");
+							operacoesCart.listarItensCarrinho(cart);
+							break;
+						}
+					} while (opcoesCarrinho != 0);
+				}
+
+				int escolha = ler.nextInt();
+
 //				switch(escolha){
 //				case 1:
 //					System.out.println("Para efectuar a compra, insira o seu BI:");
@@ -146,34 +138,59 @@ public class Main {
 					case 1:
 						int opcaoCliente;
 						do {// OPERAÇÕES DOS CLIENTES
+							
 							System.out.println(
-									"1.OPERAÇÕES CLIENTE\n1. Criar Cliente\n2. Actualizar Cliente\n3. Remover Cliente\n4. Pesquisar Cliente\n5. Ver conta Correne do Cliente\n0. SAIR E SALVAR ALTERAÇÕES\n>>>");
+									"OPERAÇÕES CLIENTE\n1. Criar Cliente\n2. Actualizar Cliente\n3. Remover Cliente\n4. Pesquisar Cliente\n5. Ver todos os clientes\n6. Ver conta Correne do Cliente\n0. SAIR E SALVAR ALTERAÇÕES\n>>>");
 							opcaoCliente = ler.nextInt();
 							switch (opcaoCliente) {
 							case 1:
 								// 1-INSERIR CLIENTE
 								Vector compras = new Vector();
-								Carrinho vazio=new Carrinho();
-								int codigo = 3;
+								Carrinho vazio = new Carrinho();
+								
+								int codigo = clientes.size();
 								System.out.println("BI DO CLIENTE:");
-								String bi = ler.next();
+								String bi = ler.next().toUpperCase().replace(" ", "");
+								ler.nextLine();
 								System.out.println("Nome do Cliente:");
-								String nome = ler.next();
-								Cliente cl = new Cliente(codigo, bi, nome, vazio);
+								String nome = ler.next().toUpperCase();
+								ler.nextLine();
+								System.out.println("Número de telemóvel Cliente");
+								String numeroTel="+"+ler.next();
+								ler.nextLine();
+								Cliente cl = new Cliente(codigo, bi, nome,numeroTel, vazio);
 								opCliente.adicionarCliente(clientes, cl);
 								break;
 							case 2:
 								// 2 - Actualizar dados do Cliente
-
+								System.out.println("Por-favor insira o ID do cliente que pretende editar os dados");
+								int identi=ler.nextInt();
+								opCliente.editarDadoCliente(clientes, identi);
 								break;
 							case 3:
 								// 3 - Remover Cliente
+								System.out.println("Digite o ID do cliente que pretende apagar");
+								int identificacao=ler.nextInt();
+								opCliente.apagarCliente(clientes, identificacao);
 								break;
 							case 4:
-								// Pesquisar Cliente
+								// Pesquisar Cliente específico
+								System.out.println("Digite o ID do cliente que pretende ver");
+								int iD=ler.nextInt();
+								int index=opCliente.procuraID(clientes, iD);
+								if(index!=0) {
+									System.out.println(((Cliente)clientes.get(index)).toString());
+								}else {
+									System.out.println("Esse ID não existe");
+								}
 								break;
 							case 5:
+								// Ver todos os clientes
+								opCliente.imprimirTodos(clientes);
+								break;
+							case 6:
 								// Ver conta corrente do Cliente (Tudo que já comprou em valores)
+								
 								break;
 							default:
 								break;
@@ -190,18 +207,17 @@ public class Main {
 							opcaoProduto = ler.nextInt();
 							switch (opcaoProduto) {
 							case 0:
-								//Gravação da lista de Clientes
-								//Recuperação da lista de Clientes
-								
+								// Gravação da lista de Clientes
+								// Recuperação da lista de Clientes
+
 								//
-								
-								
+
 //								for (int i = 0; i < stock.size(); i++) { 
 //									 
 //									//Object obj=opVitais.recuperarObjecto(caminho);
 //								}
-								
-									boolean gravou=opVitais.gravarObjecto(stock,caminhoProduto);
+
+								boolean gravou = opVitais.gravarObjecto(stock, caminhoProduto);
 								/*
 								 * System.out.println("GUARDADO!"); String listagem=""; for (int i = 0; i <
 								 * stock.size(); i++) { listagem+=((Produto)stock.get(i)).gravacao()+"\n"; }
@@ -211,24 +227,23 @@ public class Main {
 								 * System.out.println("Alterações Gravadas"); } catch (IOException e) {
 								 * System.out.println("ERRO NA GRAVAÇÃO."); e.printStackTrace(); }
 								 */
-						
-					
+
 								break;
 							case 1:
 								// Adicionar produtos no Stock
-								//!AO ENCOMENDAR O PRODUTO PODE DEVE/PODE ESCOLHER A QUANTIDADE!
+								// !AO ENCOMENDAR O PRODUTO PODE DEVE/PODE ESCOLHER A QUANTIDADE!
 								int codigo = stock.size();
 								System.out.println("Quantidade da encomenda: ");
 								int qtd = ler.nextInt();
 								ler.nextLine();
-								
+
 								System.out.println("Preço do produto: ");
-								double preco= ler.nextDouble();
+								double preco = ler.nextDouble();
 								ler.nextLine();
-								
+
 								System.out.println("Nome do produto que pretende encomendar: ");
-								String nomeProduto=ler.nextLine();
-								
+								String nomeProduto = ler.nextLine();
+
 								Produto prod = new Produto(codigo, nomeProduto, qtd, preco);
 								armazem.adicionarNovoProduto(stock, prod);
 								break;
@@ -236,25 +251,25 @@ public class Main {
 								// 2 - Actualizar dados do Produto
 								System.out.println("ID do produto que pretende actualizar:");
 								id = ler.nextInt();
-								armazem.editarDadoProduto(stock,id);
+								armazem.editarDadoProduto(stock, id);
 								break;
 							case 3:
 								// 3 - Remover Produto
 								System.out.println("ID do produto que pretende remover:");
 								id = ler.nextInt();
-								armazem.removerProduto(stock,id);
+								armazem.removerProduto(stock, id);
 								break;
 							case 4:
 								// Pesquisar Produto
 								System.out.println("ID do produto que pretende pesquisar: ");
 								id = ler.nextInt();
-								int indice=armazem.procurarCodigo(stock, id);
-								if(indice!=-1) {
-									System.out.println(((Produto)stock.get(indice)).toString());
-								}else {
-								 System.out.println("Produto inexistente");
+								int indice = armazem.procurarCodigo(stock, id);
+								if (indice != -1) {
+									System.out.println(((Produto) stock.get(indice)).toString());
+								} else {
+									System.out.println("Produto inexistente");
 								}
-								
+
 								break;
 							case 5:
 								// Emitir Relatórios do Stock (produtos abaixo de 5 unidades e produtos mais
@@ -263,8 +278,8 @@ public class Main {
 								armazem.abaixoDe5(stock);
 
 								System.out.println("Listagem de quantos produtos mais vendidos?");
-								int quantos=ler.nextInt();
-								armazem.maisVendidos(stock,quantos);
+								int quantos = ler.nextInt();
+								armazem.maisVendidos(stock, quantos);
 
 								break;
 							case 6:

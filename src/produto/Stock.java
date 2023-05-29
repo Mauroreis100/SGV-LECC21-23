@@ -99,6 +99,9 @@ public class Stock {
 				escolha = input.nextInt();
 				input.nextLine();
 				switch (escolha) {
+				case 0:
+					
+					break;
 				case 1:
 					System.out.println("Insira a nova quantidade: ");
 					int qtd = input.nextInt();

@@ -9,18 +9,29 @@ public class Cliente {
 	private int id;
 	private String nome, bi;
 	private Carrinho compra;
+	private String numeroTel;
 	private Vector compras;
+	//SEXO !!!!!!!
 
 	/*
 	 * O cliente tem um vector de todas as compras já feitas Caso tenha de recuperar
 	 * ou iniicializar pela primeira vez, este construtor leva o vector, vazio ou
 	 * não
 	 */
-	public Cliente(int id, String bi, String nome, Carrinho compra) {
+	public Cliente(int id, String bi, String nome, String numeroTel,Carrinho compra) {
 		this.id = id;
 		this.bi = bi;
+		this.numeroTel=numeroTel;
 		this.nome = nome;
 		this.compra = compra;
+	}
+
+	public String getNumeroTel() {
+		return numeroTel;
+	}
+
+	public void setNumeroTel(String numeroTel) {
+		this.numeroTel = numeroTel;
 	}
 
 	public Carrinho getCompra() {
@@ -65,7 +76,7 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return "Cliente [id=" + id + ", nome=" + nome + ", compras=" + compras + "]";
+		return "Cliente [id=" + id + ", bi="+bi+", nome=" + nome +", numeroTel="+numeroTel+"]";
 	}
 
 }
