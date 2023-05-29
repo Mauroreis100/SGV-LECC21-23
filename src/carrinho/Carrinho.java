@@ -1,8 +1,9 @@
 package carrinho;
+import java.io.Serializable;
 import java.util.Vector;
 
 import produto.Produto;
-public class Carrinho {
+public class Carrinho implements Serializable{
 private String nome;//Nome do Shopping;Location
 private double iva;
 private double total;

@@ -84,6 +84,7 @@ public class OperecoesCliente {
 					escolha = input.nextInt();
 					switch (escolha) {
 					case 0:
+						
 						break;
 					case 1:
 						System.out.println("Insira o nome do cliente:");
@@ -137,16 +138,18 @@ public class OperecoesCliente {
 	public void verContaCorrente(Vector clientes, int id) {
 		Scanner input = new Scanner(System.in);
 		double valorTotal = 0;
-		
+
 		int index = procuraID(clientes, id);
 
 		if (index != -1) {
-			Vector compras=((Cliente)clientes.get(index)).getCompras();
-			for (int j = 0; j < compras.size() ; j++) {
-				valorTotal += ((Produto)compras.get(j)).getPreco();// Problemas com cast } } }
+			Vector compras = ((Cliente) clientes.get(index)).getCompras();
+			for (int j = 0; j < compras.size(); j++) {
+				valorTotal += ((Carrinho) compras.get(j)).getTotal();
 			}
+		}else {
+			System.out.println("Este Cliente não existe");
 		}
-		
+
 	}
 
 	// TENHO DE APLICAR IVA AQUI
