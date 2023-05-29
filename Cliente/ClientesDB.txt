@@ -1,2 +1,2 @@
-cliente.Cliente@629f0666
-------------------------------
+Produto [id=0, nome=Banana, qtd=2, preco=20.0, vendas=0]
+Produto [id=1, nome=Pasta, qtd=23, preco=200.0, vendas=0]

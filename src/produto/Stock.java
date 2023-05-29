@@ -34,7 +34,7 @@ public class Stock {
 		for (int i = 0; i < lista.size(); i++) {
 			// Porcura por strings com o mesmo nome, ignorando a capitalização
 			if ((((Produto) lista.get(i)).getNome().replace(" ", "")).equalsIgnoreCase(nome)) {
-				System.out.println("JÁ FOI INSERIDO");
+				System.out.println("Um produto com este nome já existe, foi aumentado mais uma unidade");
 				// Se encontrar retorna o booleano verdade
 				return true;
 			}

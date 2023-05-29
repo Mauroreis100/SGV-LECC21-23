@@ -1,6 +1,6 @@
 package produto;
-
-public class Produto {
+import java.io.Serializable;
+public class Produto implements Serializable{
 private int id;
 private String nome,tipo;
 private int qtd;//qtd
@@ -72,10 +72,11 @@ public String imprimiVendas() {
 }
 
 //TENHO CONSTRUTOR DE quantidade que será usado para recuperar (eu acho)
-public Produto(int id, String nome, int qtd) {
+public Produto(int id, String nome, int qtd,double preco) {
 	this.id = id;
 	this.nome = nome;
 	this.qtd = qtd;
+	this.preco=preco;
 }
 @Override
 public String toString() {
@@ -94,17 +95,16 @@ public String toString() {
 
 public String gravacao() {
 	StringBuilder builder = new StringBuilder();
-	builder.append("Produto [id=");
+	builder.append(" ");
 	builder.append(id);
-	builder.append(", nome=");
+	builder.append(" ");
 	builder.append(nome);
-	builder.append(", qtd=");
+	builder.append(" ");
 	builder.append(qtd);
-	builder.append(", preco=");
+	builder.append(" ");
 	builder.append(preco);
-	builder.append(", vendas=");
+	builder.append(" ");
 	builder.append(vendas);
-	builder.append("]");
 	return builder.toString();
 }
 

@@ -29,6 +29,9 @@ public class Main {
 		// Instância Vector dos Produtos no Stock. (Eventualmente deve recuperar do
 		// ficheiro de texto)
 		Vector stock = new Vector();
+		
+	
+				
 
 		// Instância de Operações do Vector Clientes
 		OperecoesCliente opCliente = new OperecoesCliente();
@@ -43,6 +46,19 @@ public class Main {
 		OperacoesVitais opVitais=new OperacoesVitais();
 		
 		
+		//Recuperação de produtos do ficheiro de texto
+		//Recuperando o que já tem
+		
+		String caminhoProduto="Produtos\\ProdutosDB.txt";
+		File fileProdutos=new File(caminhoProduto);
+		if(fileProdutos.length()!=0) {
+			stock=(Vector)opVitais.recuperarObjecto(caminhoProduto);
+		}
+		
+		/*
+		 * Vector stockRecuperado=(Vector)opVitais.recuperarObjecto(caminhoProduto);
+		 * System.out.println(stockRecuperado.toString());
+		 */
 		Scanner ler = new Scanner(System.in);
 		
 		Random aleatorio = new Random();
@@ -178,37 +194,42 @@ public class Main {
 								//Recuperação da lista de Clientes
 								
 								//
-								 String listagem="";
-								 for (int i = 0; i < stock.size(); i++) {
-									listagem+=((Produto)stock.get(i)).gravacao();
-								}
-								 System.out.println(listagem);
-								 try {
-								      FileWriter myWriter = new FileWriter(new File("M:\\SGV-LECC21-23\\Cliente\\ClientesDB.txt"));
-								      myWriter.write(listagem);
-								      myWriter.close();
-								      System.out.println("Alterações Gravadas");
-								    } catch (IOException e) {
-								      System.out.println("ERRO NA GRAVAÇÃO.");
-								      e.printStackTrace();
-								    }
-							
+								
+								
+//								for (int i = 0; i < stock.size(); i++) { 
+//									 
+//									//Object obj=opVitais.recuperarObjecto(caminho);
+//								}
+								
+									boolean gravou=opVitais.gravarObjecto(stock,caminhoProduto);
+								/*
+								 * System.out.println("GUARDADO!"); String listagem=""; for (int i = 0; i <
+								 * stock.size(); i++) { listagem+=((Produto)stock.get(i)).gravacao()+"\n"; }
+								 * //Impressão de produtos inseridos System.out.println(listagem); try {
+								 * FileWriter myWriter = new FileWriter(new File("Produtos\\ProdutosDB.txt"));
+								 * myWriter.write(listagem); myWriter.close();
+								 * System.out.println("Alterações Gravadas"); } catch (IOException e) {
+								 * System.out.println("ERRO NA GRAVAÇÃO."); e.printStackTrace(); }
+								 */
 						
 					
 								break;
 							case 1:
 								// Adicionar produtos no Stock
+								//!AO ENCOMENDAR O PRODUTO PODE DEVE/PODE ESCOLHER A QUANTIDADE!
 								int codigo = stock.size();
 								System.out.println("Quantidade da encomenda: ");
 								int qtd = ler.nextInt();
 								ler.nextLine();
 								
+								System.out.println("Preço do produto: ");
+								double preco= ler.nextDouble();
+								ler.nextLine();
+								
 								System.out.println("Nome do produto que pretende encomendar: ");
 								String nomeProduto=ler.nextLine();
-							
-								System.out.println("Preço do produto: ");
 								
-								Produto prod = new Produto(codigo, nomeProduto, qtd);
+								Produto prod = new Produto(codigo, nomeProduto, qtd, preco);
 								armazem.adicionarNovoProduto(stock, prod);
 								break;
 							case 2:
