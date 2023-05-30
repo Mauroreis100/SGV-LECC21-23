@@ -5,6 +5,7 @@ private int id;
 private String nome,tipo;
 private int qtd;//qtd
 private int vendas;//Quantas vezes este produto foi vendido?
+private double total;
 private double preco;
 
 /*No momento que lês para inserir um produto no vector

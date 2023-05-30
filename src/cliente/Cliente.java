@@ -9,9 +9,8 @@ public class Cliente implements Serializable{
 
 	private int id;
 	private String nome, bi;
-	private Carrinho compra;
 	private String numeroTel;
-	private Vector compras;
+	private Vector compras=new Vector();
 	//SEXO !!!!!!!
 
 	/*
@@ -19,12 +18,12 @@ public class Cliente implements Serializable{
 	 * ou iniicializar pela primeira vez, este construtor leva o vector, vazio ou
 	 * não
 	 */
-	public Cliente(int id, String bi, String nome, String numeroTel,Carrinho compra) {
+	public Cliente(int id, String bi, String nome, String numeroTel,Vector compras) {
 		this.id = id;
 		this.bi = bi;
 		this.numeroTel=numeroTel;
 		this.nome = nome;
-		this.compra = compra;
+		this.compras = compras;
 	}
 
 	public String getNumeroTel() {
@@ -33,14 +32,6 @@ public class Cliente implements Serializable{
 
 	public void setNumeroTel(String numeroTel) {
 		this.numeroTel = numeroTel;
-	}
-
-	public Carrinho getCompra() {
-		return compra;
-	}
-
-	public void setCompra(Carrinho compra) {
-		this.compra = compra;
 	}
 
 	public String getBi() {

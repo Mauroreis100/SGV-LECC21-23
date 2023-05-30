@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import carrinho.Carrinho;
 import produto.Produto;
-
+import compras.Compras;
 public class OperecoesCliente {
 
 	public Vector adicionarCliente(Vector lista, Cliente cl) {
@@ -53,22 +53,22 @@ public class OperecoesCliente {
 	 * seleccionar tudo que quer comprar
 	 * 
 	 */
-	public boolean compraIVA(int id, Vector lista, Carrinho compra) {
-		int index = procuraID(lista, id);
-		double soma = 0;
-		if (index != -1) {
-			for (int i = 0; i < compra.getProdutos().size(); i++) {
-				soma += ((Produto) compra.getProdutos().get(i)).getPreco();
-			}
-			compra.setTotal(soma);
-			((Cliente) lista.get(index)).setCompra(compra);
-			System.out.println("COMPRA FEITA COM SUCESSO\nTOTAL = " + compra.getTotal() + "MT");
-			return true;
-		}
-		System.out.println("FALHA NA COMPRA! TENTE DENOVO");
-		return false;
-
-	}
+//	public boolean compraIVA(int id, Vector lista, Carrinho compra) {
+//		int index = procuraID(lista, id);
+//		double soma = 0;
+//		if (index != -1) {
+//			for (int i = 0; i < compra.getProdutos().size(); i++) {
+//				soma += ((Produto) compra.getProdutos().get(i)).getPreco();
+//			}
+//			compra.setTotal(soma);
+//			((Cliente) lista.get(index)).setCompra(compra);
+//			System.out.println("COMPRA FEITA COM SUCESSO\nTOTAL = " + compra.getTotal() + "MT");
+//			return true;
+//		}
+//		System.out.println("FALHA NA COMPRA! TENTE DENOVO");
+//		return false;
+//
+//	}
 
 	public void editarDadoCliente(Vector clientes, int id) {
 		int index = procuraID(clientes, id);
@@ -144,7 +144,7 @@ public class OperecoesCliente {
 		if (index != -1) {
 			Vector compras = ((Cliente) clientes.get(index)).getCompras();
 			for (int j = 0; j < compras.size(); j++) {
-				valorTotal += ((Carrinho) compras.get(j)).getTotal();
+				valorTotal += ((Compras) compras.get(j)).getTotal();
 			}
 		}else {
 			System.out.println("Este Cliente não existe");

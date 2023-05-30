@@ -1,53 +1,22 @@
 package carrinho;
 import java.io.Serializable;
+import produto.Produto;
 import java.util.Vector;
 
 import produto.Produto;
-public class Carrinho implements Serializable{
-private String nome;//Nome do Shopping;Location
-private double iva;
-private double multi;//Multiplicação entre a quantidade e o preço do produto
-private double total;//Total de todos so produtos inseridos?
-private Vector produtos;
-public Carrinho(String nome, Vector produtos) {
-	this.nome = nome;
-	this.iva = 16/100;
-	this.produtos=produtos;
+public class Carrinho extends Produto implements Serializable{
 	
-}
-public Carrinho(Vector produtos) {
-	this.produtos=produtos;
-}
-
+	private double total;
+public Carrinho(int id, String nome, int qtd, double preco,double total) {
+		super(id, nome, qtd, preco);
+		this.total=total;
+		// TODO Auto-generated constructor stub
+	}
 public double getTotal() {
 	return total;
 }
 public void setTotal(double total) {
 	this.total = total;
 }
-public Carrinho() {}
-public String getNome() {
-	return nome;
-}
-public void setNome(String nome) {
-	this.nome = nome;
-}
-public double getIva() {
-	return iva;
-}
-public void setIva(double iva) {
-	this.iva = iva;
-}
-public Vector getProdutos() {
-	return produtos;
-}
-public void setProdutos(Vector produtos) {
-	this.produtos = produtos;
-}
-@Override
-public String toString() {
-	return "Carrinho [nome=" + nome + ", iva=" + iva + ", produtos=" + produtos + "]";
-}
-
 
 }

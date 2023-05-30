@@ -81,7 +81,7 @@ public class Main {
 						System.out.println(
 								"CARRINHO\n1. Adicionar produto no carrinho\n2. Remover Produto do carrinho\n3. Ver produtos no carrinho\n\n4. Ver produtos disponíveis\n5. Finalizar Compra\n0. CANCELAR\n>>>");
 						opcoesCarrinho = ler.nextInt();
-						Carrinho cart = new Carrinho(carrinho);
+						
 						Vector stockTemporario = stock;
 						switch (opcoesCarrinho) {
 						case 1:
@@ -96,7 +96,7 @@ public class Main {
 								//cart.getProdutos().add(((Produto) stock.get(index)));
 								int quantidade = ler.nextInt();
 								// Index do produto no stock
-								operacoesCart.adicionarProduto(index, cart, stockTemporario, quantidade);
+								operacoesCart.adicionarProduto(index, carrinho, stockTemporario, quantidade);
 								//DEVE MULTIPLICAR OS PRODUTOS PELA QUANTIDADE
 							} else {
 								System.out.println("Produto não está em stock");
@@ -110,17 +110,23 @@ public class Main {
 							//REMOVER TUDO OU 1?
 							//operacoesCart.removerProduto(code, cart);
 							
-							operacoesCart.removerProdutoQuantidade(code, cart,stockTemporario,2);
+							operacoesCart.removerProdutoQuantidade(code, carrinho ,stockTemporario,2);
 							break;
 						case 3:
 							System.out.println("ITENS DO CARRINHO");
-							operacoesCart.listarItensCarrinho(cart);
+							operacoesCart.listarItensCarrinho(carrinho);
 							break;
 						case 4:
 							armazem.imprimirTodos(stockTemporario);
 							break;
 						case 5:
 							//AUMENTAR VENDA
+							if(operacoesCart.vendaDinheiro(carrinho, (Cliente)clientes.get(procuraCodigo))) {
+								System.out.println("\nCompra feia com sucesso");
+								boolean gravou = opVitais.gravarObjecto(clientes, caminhoClientes);
+							}else{
+								System.out.println("\nErro na compra, contacte o suporte ao cliente!\n\n");
+							};
 							break;
 						}
 					} while (opcoesCarrinho != 0);
@@ -173,7 +179,7 @@ public class Main {
 							case 1:
 								// 1-INSERIR CLIENTE
 								Vector compras = new Vector();
-								Carrinho vazio = new Carrinho();
+								
 
 								int codigo = clientes.size();
 								System.out.println("BI DO CLIENTE:");
@@ -185,7 +191,7 @@ public class Main {
 								System.out.println("Número de telemóvel Cliente");
 								String numeroTel = "+" + ler.next();
 								ler.nextLine();
-								Cliente cl = new Cliente(codigo, bi, nome, numeroTel, vazio);
+								Cliente cl = new Cliente(codigo, bi, nome, numeroTel, compras);
 								opCliente.adicionarCliente(clientes, cl);
 								break;
 							case 2:
@@ -218,7 +224,11 @@ public class Main {
 							case 6:
 								// Ver conta corrente do Cliente (Tudo que já comprou em valores)
 								System.out.println("Insira o código de identificação do cliente:");
-
+								int codigoCl=ler.nextInt();
+								int getCode= opCliente.procuraID(clientes, codigoCl);
+								if (getCode != -1) {
+									
+								}
 								break;
 							default:
 								break;
