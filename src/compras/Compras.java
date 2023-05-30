@@ -56,8 +56,9 @@ public void setTotal(double total) {
 }
 @Override
 public String toString() {
-	return "Compras [id=" + id + ", pertence=" + pertence + ", data=" + data + ", itens=" + itens + ", total=" + total
+	return "Compras [id=" + id + ", pertence=" + pertence + ", nome=" + nome + ", itens=" + itens + ", total=" + total
 			+ "]";
 }
+
 
 }

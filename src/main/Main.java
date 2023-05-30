@@ -5,12 +5,14 @@ import produto.Stock;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
 
 import carrinho.*;
 import cliente.*;
+import compras.Compras;
 
 public class Main {
 //ver situação de IDS
@@ -27,10 +29,6 @@ public class Main {
 		if (fileClientes.length() != 0) {
 			clientes = (Vector) opVitais.recuperarObjecto(caminhoClientes);
 		}
-
-		// Instância Vector dos Produtos no Carrinho. Não recupera nada. guarda tudo na
-		// mémoria temporária
-		Vector carrinho = new Vector();
 
 		// Instância Vector dos Produtos no Stock. (Eventualmente deve recuperar do
 		// ficheiro de texto)
@@ -71,6 +69,9 @@ public class Main {
 			int procuraCodigo = -1;
 			switch (operacao) {
 			case 1:
+				// Instância Vector dos Produtos no Carrinho. Não recupera nada. guarda tudo na
+				// mémoria temporária
+				Vector carrinho = new Vector();
 				System.out.println("\nIDENTIFIQUE-SE USANDO O CÓDIGO LECC");
 				// int identificacao=ler.nextInt();
 				int codeLECC = ler.nextInt();
@@ -81,7 +82,7 @@ public class Main {
 						System.out.println(
 								"CARRINHO\n1. Adicionar produto no carrinho\n2. Remover Produto do carrinho\n3. Ver produtos no carrinho\n\n4. Ver produtos disponíveis\n5. Finalizar Compra\n0. CANCELAR\n>>>");
 						opcoesCarrinho = ler.nextInt();
-						
+
 						Vector stockTemporario = stock;
 						switch (opcoesCarrinho) {
 						case 1:
@@ -93,11 +94,11 @@ public class Main {
 
 								System.out.println("E qual é a quantidade de " + ((Produto) stock.get(index)).getNome()
 										+ " que pretende adicionar ao carrinho?");
-								//cart.getProdutos().add(((Produto) stock.get(index)));
+								// cart.getProdutos().add(((Produto) stock.get(index)));
 								int quantidade = ler.nextInt();
 								// Index do produto no stock
 								operacoesCart.adicionarProduto(index, carrinho, stockTemporario, quantidade);
-								//DEVE MULTIPLICAR OS PRODUTOS PELA QUANTIDADE
+								// DEVE MULTIPLICAR OS PRODUTOS PELA QUANTIDADE
 							} else {
 								System.out.println("Produto não está em stock");
 							}
@@ -106,11 +107,11 @@ public class Main {
 						case 2:
 							System.out.println("Qual é o código do produto que pretende remover no carrinho?");
 							int code = ler.nextInt();
-							//REMOÇÃO DEVOLVE TODOS OS CARRINHOS AO STOCK TEMPORÁRIO
-							//REMOVER TUDO OU 1?
-							//operacoesCart.removerProduto(code, cart);
-							
-							operacoesCart.removerProdutoQuantidade(code, carrinho ,stockTemporario,2);
+							// REMOÇÃO DEVOLVE TODOS OS CARRINHOS AO STOCK TEMPORÁRIO
+							// REMOVER TUDO OU 1?
+							// operacoesCart.removerProduto(code, cart);
+
+							operacoesCart.removerProdutoQuantidade(code, carrinho, stockTemporario, 2);
 							break;
 						case 3:
 							System.out.println("ITENS DO CARRINHO");
@@ -120,43 +121,21 @@ public class Main {
 							armazem.imprimirTodos(stockTemporario);
 							break;
 						case 5:
-							//AUMENTAR VENDA
-							if(operacoesCart.vendaDinheiro(carrinho, (Cliente)clientes.get(procuraCodigo))) {
-								System.out.println("\nCompra feia com sucesso");
+							// AUMENTAR VENDA e GRAVAR A COMPRA NO CLIENTE QUE ESTÁ A USAR O PROGRAMA
+							if (operacoesCart.vendaDinheiro(carrinho, (Cliente) clientes.get(procuraCodigo))) {
+								boolean record = opVitais.gravarObjecto(stockTemporario, caminhoProduto);
 								boolean gravou = opVitais.gravarObjecto(clientes, caminhoClientes);
-							}else{
+								
+							} else {
 								System.out.println("\nErro na compra, contacte o suporte ao cliente!\n\n");
-							};
+							}
+							opcoesCarrinho=0;
+
 							break;
 						}
 					} while (opcoesCarrinho != 0);
 				}
-
-				int escolha = ler.nextInt();
-
-//				switch(escolha){
-//				case 1:
-//					System.out.println("Para efectuar a compra, insira o seu BI:");
-//					String bi=ler.next();
-//					//EXISTE ESTE CLIENTE? USANDO BI
-//					
-//					if(true || true) {
-//						
-//					
-//						
-//					
-//					
-//						
-//					}
-//					
-//					break;
-//				case 2:
-//					System.out.println("Para efectuar a compra, insira o seu código LECC:");
-//					int codigoLECC=ler.nextInt();
-//					//EXISTE ESTE CLIENTE? USANDO O CÓDIGO LECC?
-//					break;
-//				}
-//				break;
+				break;
 			case 2:
 				int opcoes;
 
@@ -179,7 +158,6 @@ public class Main {
 							case 1:
 								// 1-INSERIR CLIENTE
 								Vector compras = new Vector();
-								
 
 								int codigo = clientes.size();
 								System.out.println("BI DO CLIENTE:");
@@ -224,10 +202,10 @@ public class Main {
 							case 6:
 								// Ver conta corrente do Cliente (Tudo que já comprou em valores)
 								System.out.println("Insira o código de identificação do cliente:");
-								int codigoCl=ler.nextInt();
-								int getCode= opCliente.procuraID(clientes, codigoCl);
+								int codigoCl = ler.nextInt();
+								int getCode = opCliente.procuraID(clientes, codigoCl);
 								if (getCode != -1) {
-									
+
 								}
 								break;
 							default:
@@ -245,21 +223,9 @@ public class Main {
 							opcaoProduto = ler.nextInt();
 							switch (opcaoProduto) {
 							case 0:
-								// Gravação da lista de Clientes
-								// Recuperação da lista de Clientes
-//								for (int i = 0; i < stock.size(); i++) { 
-//									//Object obj=opVitais.recuperarObjecto(caminho);
-//								}
+							
 								boolean gravou = opVitais.gravarObjecto(stock, caminhoProduto);
-								/*
-								 * System.out.println("GUARDADO!"); String listagem=""; for (int i = 0; i <
-								 * stock.size(); i++) { listagem+=((Produto)stock.get(i)).gravacao()+"\n"; }
-								 * //Impressão de produtos inseridos System.out.println(listagem); try {
-								 * FileWriter myWriter = new FileWriter(new File("Produtos\\ProdutosDB.txt"));
-								 * myWriter.write(listagem); myWriter.close();
-								 * System.out.println("Alterações Gravadas"); } catch (IOException e) {
-								 * System.out.println("ERRO NA GRAVAÇÃO."); e.printStackTrace(); }
-								 */
+
 								break;
 							case 1:
 								// Adicionar produtos no Stock
@@ -324,8 +290,17 @@ public class Main {
 						} while (opcaoProduto != 0);// FIM DA OPERAÇÕES DE PRODUTOS
 
 						break;
-					case 3:
-						// LISTAR PRODUTOS?
+					case 3://VENDAS IGUALAR TEMPORARIO COM O QUE ESTÁ FORA
+						for (int i = 0; i < clientes.size() ; i++) {
+							System.out.println();
+							Cliente csa=(Cliente)clientes.get(i);
+							Compras comprer=(Compras)csa.getCompras().get(i);
+							Produto comprers=(Produto)comprer.getItens().get(i);
+							for (int j = 0; j < ((Cliente)clientes.get(i)).getCompras().size(); j++) {
+//								System.out.println( (Produto)((Cliente)clientes.get(i)).getCompras().get(j).  );								
+//								System.out.println(((Produto)((Cliente)clientes.get(i)).getCompras().get(j)).toString());
+							}
+						}
 
 						break;
 					}
@@ -338,45 +313,6 @@ public class Main {
 			}
 
 		} while (operacao != 0);// FIM DA TELA PRINCIPAL
-
-		/*
-		 * Vector itens=new Vector();
-		 * 
-		 * 
-		 * Carrinho cart=new Carrinho("ID \\t DESCRIÇÃO \\t QTD \\t TOTAL",itens);
-		 * Produto prod=new Produto(123,"Vaselina".toUpperCase()); //itens.add(prod);
-		 * //ADICIONAR SÓ operacoesCart.adicionarProduto(prod, cart); prod=new
-		 * Produto(1234,"MENS TRACKSUIT"); operacoesCart.adicionarProduto(prod, cart);
-		 * prod=new Produto(341,"Blanket".toUpperCase());
-		 * operacoesCart.adicionarProduto(prod, cart);
-		 * //System.out.println("REMOVE 341\n\n"+operacoesCart.adicionarProduto(prod,
-		 * cart).toString()+"\n\n");
-		 * 
-		 * //Especificar QUANTIDADE DOS itens QUE QUER ADICIONAR for (int i = 0; i <
-		 * cart.getProdutos().size(); i++) {
-		 * System.out.println(cart.getProdutos().get(i));
-		 * 
-		 * } System.out.println("\nREMOVE 341\n\n"); operacoesCart.removerProduto(341,
-		 * prod, cart); for (int i = 0; i < cart.getProdutos().size(); i++) {
-		 * System.out.println(cart.getProdutos().get(i));
-		 * 
-		 * }
-		 * 
-		 * 
-		 * 
-		 * //Carrinho cart=new Carrinho("ID \t DESCRIÇÃO \t QTD \t TOTAL",produtos);
-		 * 
-		 * 
-		 * Cliente cl=new Cliente(123,"Mauro Mahassa",cart.getProdutos());
-		 * System.out.println(cl.getCompras());
-		 * 
-		 * Produto produ=new Produto(111,"Telefone".toUpperCase());
-		 * stock.adicionarNovoProduto(produtos, produ); produ=new
-		 * Produto(132,"TeleFone".toUpperCase());
-		 * 
-		 * System.out.println(((Produto)stock.adicionarNovoProduto(produtos,
-		 * produ).get(0)).getQtd());
-		 */
 
 	}
 
