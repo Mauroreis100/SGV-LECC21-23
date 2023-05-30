@@ -11,26 +11,42 @@ public class OperacoesCarrinho {
 		Stock stock = new Stock();
 		Vector carrinho = cart.getProdutos();
 		Produto encontrado = ((Produto) lista.get(index));
-		if (cart.getProdutos().contains((Produto) lista.get(index))) {
-			for (int i = 0; i < carrinho.size(); i++) {
-				// ID dos produtos que estão no carrinho== Id dos produto na lista
-				if (((Produto) carrinho.get(i)).getId() == (encontrado.getId())) {
-					if (encontrado.getQtd() < 0) {
-						System.out.println("Acabou o stock com! Tente outra quantidade");
-					} else if (quantidade > encontrado.getQtd()) {
-						System.out.println("Em stock só tem " + encontrado.getQtd() + " de " + encontrado.getNome());
-					} else {
-						((Produto) carrinho.get(i)).setQtd(((Produto) carrinho.get(i)).getQtd() + quantidade);
-						encontrado.setQtd(encontrado.getQtd() - quantidade);
-						System.out.println("Adicionado");
-					}
-					return carrinho;
-				}
+		Produto adicionar=new Produto(index,encontrado.getNome(),quantidade,encontrado.getPreco());
+		int indexExiste = verificaExistenciaCarinho(index, cart, lista);
+		boolean situacaoStock=verificacaoQuantidade(index,lista,quantidade);
+		
+		if (situacaoStock) {
+			if (indexExiste != -1) {
+				encontrado.setQtd(encontrado.getQtd()-quantidade);
+				((Produto)carrinho.get(indexExiste)).setQtd((((Produto)carrinho.get(indexExiste))).getQtd()+quantidade);
+			}else{
+				encontrado.setQtd(encontrado.getQtd()-quantidade);
+				carrinho.add(adicionar);
+				
 			}
-
-		}
-		carrinho.add(encontrado);
+		} 
 		return carrinho;
+//
+//		if (cart.getProdutos().contains((Produto) lista.get(index))) {
+//			for (int i = 0; i < carrinho.size(); i++) {
+//				// ID dos produtos que estão no carrinho==Id dos produto na lista
+//				if (((Produto) carrinho.get(i)).getId() == (encontrado.getId())) {
+//					if (encontrado.getQtd() < 0) {
+//						System.out.println("Acabou o stock com! Tente outra quantidade");
+//					} else if (quantidade > encontrado.getQtd()) {
+//						System.out.println("Em stock só tem " + encontrado.getQtd() + " de " + encontrado.getNome());
+//					} else {
+//						((Produto) carrinho.get(i)).setQtd(((Produto) carrinho.get(i)).getQtd() + quantidade);
+//						encontrado.setQtd(encontrado.getQtd() - quantidade);
+//						System.out.println("Adicionado");
+//					}
+//					return carrinho;
+//				}
+//			}
+//
+//		}
+
+	
 
 //	int id=stock.procurarCodigo(lista, prod.getId());
 //	int qtd=prod.getQtd();//Recebe a quantidade do produto que estou prestes a inserir
@@ -45,7 +61,37 @@ public class OperacoesCarrinho {
 //	public boolean verificaStock() {
 //		
 //	}
+	public boolean verificacaoQuantidade(int index, Vector lista, int quantidade) {
+		Stock stock = new Stock();
+		Produto encontrado = ((Produto) lista.get(index));
+		if (quantidade > encontrado.getQtd()) {
+			System.out.println("Em stock só tem " + encontrado.getQtd() + " de " + encontrado.getNome());
+			return false;
+		} else if (encontrado.getQtd() < 0) {
+			System.out.println("Acabou o stock com! Tente outra quantidade");
+			return false;
 
+		} else if(quantidade<0) {
+			System.out.println("Insira uma quantidade válida");
+			return false;
+		}else {
+						return true;
+		}
+	}
+
+	public int verificaExistenciaCarinho(int index, Carrinho cart, Vector lista) {
+		Stock stock = new Stock();
+		Vector carrinho = cart.getProdutos();
+		Produto encontrado = ((Produto) lista.get(index));
+		for (int i = 0; i < carrinho.size(); i++) {
+			if (((Produto) carrinho.get(i)).getId() == encontrado.getId()) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	//A remoção devolve a quantidade de produtos a todos eles
 	public Vector removerProduto(int id, Carrinho cart) {
 		for (int i = 0; i < cart.getProdutos().size(); i++) {
 			// && ((Produto)cart.getProdutos().get(i)).getQtd()

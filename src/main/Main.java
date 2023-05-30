@@ -93,13 +93,21 @@ public class Main {
 
 								System.out.println("E qual é a quantidade de " + ((Produto) stock.get(index)).getNome()
 										+ " que pretende adicionar ao carrinho?");
+								//cart.getProdutos().add(((Produto) stock.get(index)));
 								int quantidade = ler.nextInt();
 								// Index do produto no stock
 								operacoesCart.adicionarProduto(index, cart, stockTemporario, quantidade);
+								//DEVE MULTIPLICAR OS PRODUTOS PELA QUANTIDADE
 							} else {
 								System.out.println("Produto não está em stock");
 							}
 
+							break;
+						case 2:
+							System.out.println("Qual é o código do produto que pretende remover no carrinho?");
+							int code = ler.nextInt();
+							//REMOÇÃO DEVOLVE TODOS OS CARRINHOS AO STOCK TEMPORÁRIO
+							operacoesCart.removerProduto(code, cart);
 							break;
 						case 3:
 							System.out.println("ITENS DO CARRINHO");
@@ -109,6 +117,7 @@ public class Main {
 							armazem.imprimirTodos(stockTemporario);
 							break;
 						case 5:
+							//AUMENTAR VENDA
 							break;
 						}
 					} while (opcoesCarrinho != 0);
