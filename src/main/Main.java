@@ -96,7 +96,7 @@ public class Main {
 								// cart.getProdutos().add(((Produto) stock.get(index)));
 								int quantidade = ler.nextInt();
 								// Index do produto no stock
-								operacoesCart.adicionarProduto(index, carrinho, stockTemporario, quantidade);
+								operacoesCart.adicionarProduto(((Produto) stock.get(index)).getId(), carrinho, stockTemporario, quantidade);
 								// DEVE MULTIPLICAR OS PRODUTOS PELA QUANTIDADE
 							} else {
 								System.out.println("Produto não está em stock");
@@ -113,7 +113,7 @@ public class Main {
 							operacoesCart.removerProdutoQuantidade(code, carrinho, stockTemporario, 2);
 							break;
 						case 3:
-							System.out.println("ITENS DO CARRINHO");
+							System.out.println("\n--------------------\tITENS DO CARRINHO\t--------------------");
 							operacoesCart.listarItensCarrinho(carrinho);
 							break;
 						case 4:

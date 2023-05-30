@@ -99,7 +99,7 @@ public String toCarrinho() {
 	builder.append(qtd);
 	builder.append("\t | Preço=");
 	builder.append(preco);
-	builder.append("]");
+	builder.append("");
 	return builder.toString();
 }
 public String gravacao() {
