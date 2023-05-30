@@ -21,11 +21,14 @@ public class OperacoesCarrinho {
 		if (situacaoStock) {
 			if (indexExiste != -1) {
 				encontrado.setQtd(encontrado.getQtd() - quantidade);
-				((Produto) carrinho.get(indexExiste))
-						.setQtd((((Produto) carrinho.get(indexExiste))).getQtd() + quantidade);
+				((Carrinho) carrinho.get(indexExiste))
+						.setQtd((((Carrinho) carrinho.get(indexExiste))).getQtd() + quantidade);
+				(((Carrinho) carrinho.get(indexExiste))).setTotal(encontrado.getPreco()*(((Carrinho) carrinho.get(indexExiste))).getQtd());
 			} else {
 				encontrado.setQtd(encontrado.getQtd() - quantidade);
-				carrinho.add(adicionar);
+				Carrinho produto=new Carrinho(index, encontrado.getNome(), quantidade, encontrado.getPreco(),encontrado.getPreco()*quantidade);
+				carrinho.add(produto);
+//				(((Carrinho) carrinho.get(carrinho.size()-1))).setTotal(encontrado.getPreco()*quantidade);
 
 			}
 		}
@@ -83,7 +86,8 @@ public class OperacoesCarrinho {
 		Stock stock = new Stock();
 		Produto encontrado = ((Produto) lista.get(index));
 		for (int i = 0; i < carrinho.size(); i++) {
-			if (((Produto) carrinho.get(i)).getId() == encontrado.getId()) {
+			//Ele peda o id do Produto
+			if (((Carrinho) carrinho.get(i)).getId() == encontrado.getId()) {
 				return i;
 			}
 		}
@@ -148,7 +152,7 @@ public class OperacoesCarrinho {
 			System.out.println(((Produto) carrinho.get(i)).getId() + " | "
 					+ ((Produto) carrinho.get(i)).getNome() + "|"
 					+ ((Produto) carrinho.get(i)).getQtd()+"| "
-					+"((Carrinho) carrinho.get(i)).getTotal()");
+					+((Carrinho) carrinho.get(i)).getTotal());
 		}
 	}
 
