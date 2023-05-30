@@ -13,12 +13,12 @@ public class OperacoesCarrinho {
 	public Vector adicionarProduto(int index, Vector carrinho, Vector lista, int quantidade) {
 		Stock stock = new Stock();
 		//Vector carrinho = carrinho;
-		Produto encontrado = ((Produto) lista.get(index));
-		Produto adicionar = new Produto(index, encontrado.getNome(), quantidade, encontrado.getPreco());
-		int indexExiste = verificaExistenciaCarinho(index, carrinho, lista);
 		boolean situacaoStock = verificacaoQuantidade(index, lista, quantidade);
+		int indexExiste = verificaExistenciaCarinho(index, carrinho, lista);
 
 		if (situacaoStock) {
+			Produto encontrado = ((Produto) lista.get(index));
+			Produto adicionar = new Produto(index, encontrado.getNome(), quantidade, encontrado.getPreco());
 			if (indexExiste != -1) {
 				encontrado.setQtd(encontrado.getQtd() - quantidade);
 				((Carrinho) carrinho.get(indexExiste))
@@ -33,36 +33,7 @@ public class OperacoesCarrinho {
 			}
 		}
 		return carrinho;
-//
-//		if (cart.getProdutos().contains((Produto) lista.get(index))) {
-//			for (int i = 0; i < carrinho.size(); i++) {
-//				// ID dos produtos que estão no carrinho==Id dos produto na lista
-//				if (((Produto) carrinho.get(i)).getId() == (encontrado.getId())) {
-//					if (encontrado.getQtd() < 0) {
-//						System.out.println("Acabou o stock com! Tente outra quantidade");
-//					} else if (quantidade > encontrado.getQtd()) {
-//						System.out.println("Em stock só tem " + encontrado.getQtd() + " de " + encontrado.getNome());
-//					} else {
-//						((Produto) carrinho.get(i)).setQtd(((Produto) carrinho.get(i)).getQtd() + quantidade);
-//						encontrado.setQtd(encontrado.getQtd() - quantidade);
-//						System.out.println("Adicionado");
-//					}
-//					return carrinho;
-//				}
-//			}
-//
-//		}
-
-//	int id=stock.procurarCodigo(lista, prod.getId());
-//	int qtd=prod.getQtd();//Recebe a quantidade do produto que estou prestes a inserir
-//	//Se o produto que estou prestes a inserir já existe então muda a quantidade para +quantidade
-//		cart.getProdutos().set(cart.getProdutos().indexOf(prod), prod.getQtd()+quantidade);
-//	}
-//	cart.getProdutos().add(prod);
-//	//Diminuir a quantidade, ao adicionar no carrinho deve diminuir taambém
-//	return cart.getProdutos();
 	}
-
 
 	public boolean verificacaoQuantidade(int index, Vector lista, int quantidade) {
 		Stock stock = new Stock();
@@ -149,10 +120,11 @@ public class OperacoesCarrinho {
 
 	public void listarItensCarrinho(Vector carrinho) {
 		for (int i = 0; i < carrinho.size(); i++) {
-			System.out.println(((Produto) carrinho.get(i)).getId() + " | "
-					+ ((Produto) carrinho.get(i)).getNome() + "|"
-					+ ((Produto) carrinho.get(i)).getQtd()+"| "
-					+((Carrinho) carrinho.get(i)).getTotal());
+			System.out.println(((Carrinho)carrinho.get(i)).toCarrinho()o);
+//			System.out.println(((Produto) carrinho.get(i)).getId() + " | "
+//					+ ((Produto) carrinho.get(i)).getNome() + "|"
+//					+ ((Produto) carrinho.get(i)).getQtd()+"| "
+//					+((Carrinho) carrinho.get(i)).getTotal());
 		}
 	}
 

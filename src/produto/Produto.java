@@ -1,12 +1,13 @@
 package produto;
 import java.io.Serializable;
+import java.util.Calendar;
 public class Produto implements Serializable{
 private int id;
 private String nome,tipo;
-private int qtd;//qtd
+private int qtd;
 private int vendas;//Quantas vezes este produto foi vendido?
-private double total;
 private double preco;
+private Calendar calendar;
 
 /*No momento que lês para inserir um produto no vector
 Decidi não lidar com a quantidade,
@@ -22,13 +23,6 @@ public Produto(int id,String nome) {
 	this.vendas=vendas;
 }
 
-
-public String getTipo() {
-	return tipo;
-}
-public void setTipo(String tipo) {
-	this.tipo = tipo;
-}
 public int getVendas() {
 	return vendas;
 }
@@ -64,7 +58,7 @@ public String imprimiVendas() {
 	StringBuilder builder = new StringBuilder();
 	builder.append("Produto [id=");
 	builder.append(id);
-	builder.append(", nome=");
+	builder.append(", Nome=");
 	builder.append(nome);
 	builder.append(", VENDAS=");
 	builder.append(vendas);
@@ -82,18 +76,32 @@ public Produto(int id, String nome, int qtd,double preco) {
 @Override
 public String toString() {
 	StringBuilder builder = new StringBuilder();
-	builder.append("Produto [id=");
+	builder.append("Produto [ID=");
 	builder.append(id);
-	builder.append(", nome=");
+	builder.append("\t | Nome=");
 	builder.append(nome);
-	builder.append(", qtd=");
+	builder.append("\t | Qtd=");
 	builder.append(qtd);
-	builder.append(", preco=");
+	builder.append("\t | Preço=");
+	builder.append(preco);
+	builder.append("\t | Vendas=");
+	builder.append(vendas);
+	builder.append("]");
+	return builder.toString();
+}
+public String toCarrinho() {
+	StringBuilder builder = new StringBuilder();
+	builder.append("Produto [ID=");
+	builder.append(id);
+	builder.append("\t | Nome=");
+	builder.append(nome);
+	builder.append("\t | Qtd=");
+	builder.append(qtd);
+	builder.append("\t | Preço=");
 	builder.append(preco);
 	builder.append("]");
 	return builder.toString();
 }
-
 public String gravacao() {
 	StringBuilder builder = new StringBuilder();
 	builder.append(" ");

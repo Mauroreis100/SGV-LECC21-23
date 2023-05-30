@@ -1,8 +1,11 @@
 package produto;
 
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
+
+import cliente.Cliente;
 
 public class Stock {
 	/*
@@ -166,15 +169,25 @@ public class Stock {
 			System.out.println("TENTE DENOVO, COM UM NÚMERO MENOR OU MAIOR");
 		}
 	}
-
+	public int geracaoID(Vector lista) {
+		Random random = new Random();
+		int id = random.nextInt(101);
+		for (int i = 0; i < lista.size(); i++) {
+			if (((Produto) lista.get(i)).getId() == id) {
+				return geracaoID(lista);
+			}
+		}
+		return id;
+	}
 	public void imprimirTodos(Vector lista) {
 		if (lista.size() > 0) {
+			System.out.println("\n---\t\t\tSTOCK\t---");
 			for (int i = 0; i < lista.size(); i++) {
 				System.out.println(((Produto) lista.get(i)).toString());
 			}
 
 		} else {
-			System.out.println("STOCK VAZIO");
+			System.out.println("\nSTOCK VAZIO!");
 		}
 	}
 	// Este método diminui a quantidade de um produto por

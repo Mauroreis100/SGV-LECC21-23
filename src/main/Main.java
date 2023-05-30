@@ -78,8 +78,8 @@ public class Main {
 				if (procuraCodigo != -1) {
 					int opcoesCarrinho;
 					do {
-						System.out.print(
-								"\nBEM-VINDO(A)"+((Cliente)clientes.get(procuraCodigo)).getNome()+"-----\tESCOLHA A SUA OPERAÇÃO DE CARRINHO\t------\n1. Adicionar produto no carrinho\n2. Remover Produto do carrinho\n3. Ver produtos no carrinho\n4. Ver produtos disponíveis\n5. Finalizar Compra\n0. CANCELAR\n>>> ");
+						System.out.print("\n BEM-VINDO(A) ("+((Cliente) clientes.get(procuraCodigo)).getId()+") " + ((Cliente) clientes.get(procuraCodigo)).getNome()+" "
+								+ "\n-----\tESCOLHA A SUA OPERAÇÃO DE CARRINHO\t------\n1. Adicionar produto no carrinho\n2. Remover Produto do carrinho\n3. Ver produtos no carrinho\n4. Ver produtos disponíveis\n5. Finalizar Compra\n0. CANCELAR\n>>> ");
 						opcoesCarrinho = ler.nextInt();
 
 						Vector stockTemporario = stock;
@@ -124,15 +124,17 @@ public class Main {
 							if (operacoesCart.vendaDinheiro(carrinho, (Cliente) clientes.get(procuraCodigo))) {
 								boolean record = opVitais.gravarObjecto(stockTemporario, caminhoProduto);
 								boolean gravou = opVitais.gravarObjecto(clientes, caminhoClientes);
-								
+
 							} else {
 								System.out.println("\nErro na compra, contacte o suporte ao cliente!\n\n");
 							}
-							opcoesCarrinho=0;
+							opcoesCarrinho = 0;
 
 							break;
 						}
 					} while (opcoesCarrinho != 0);
+				}else {
+					System.out.println("-----------------------------------\nCLIENTE COM CÓDIGO "+codeLECC+" NÃO CADASTRADO! TENTE DE NOVO\n------------------------------------");
 				}
 				break;
 			case 2:
@@ -140,7 +142,7 @@ public class Main {
 
 				do {// OPERAÇÕES MAIS OPERAÇÕES
 					System.out.println("-----\tOPÇÕES\t-----");
-					System.out.print("\n1. Clientes\n2. Produtos\n3. Vendas\n0. Sair\n>>> ");
+					System.out.print("\n1. Clientes\n2. Produtos\n3. Vendas\n0. Voltar\n>>> ");
 					opcoes = ler.nextInt();
 					switch (opcoes) {
 					case 1:
@@ -148,7 +150,7 @@ public class Main {
 						do {// OPERAÇÕES DOS CLIENTES
 
 							System.out.print(
-									"\nOPERAÇÕES CLIENTE\n1. Criar Cliente\n2. Actualizar Cliente\n3. Remover Cliente\n4. Pesquisar Cliente\n5. Ver todos os clientes\n6. Ver conta Correne do Cliente\n0. SAIR E SALVAR ALTERAÇÕES\n>>> ");
+									"\n\t-----OPERAÇÕES CLIENTE-----\n1. Criar Cliente\n2. Actualizar Cliente\n3. Remover Cliente\n4. Pesquisar Cliente\n5. Ver todos os clientes\n6. Ver conta Correne do Cliente\n0. SAIR E SALVAR ALTERAÇÕES\n>>> ");
 							opcaoCliente = ler.nextInt();
 							switch (opcaoCliente) {
 							case 0:
@@ -156,22 +158,24 @@ public class Main {
 								break;
 							case 1:
 								// 1-INSERIR CLIENTE
-								Vector compras = new Vector();//Vector vazio com compras do Cliente novo
-								//GERAÇÃO DE ID
+								Vector compras = new Vector();// Vector vazio com compras do Cliente novo
+								// GERAÇÃO DE ID
 								int codigo = opCliente.geracaoID(clientes);
 								System.out.println("BI DO CLIENTE:");
 								String bi = ler.next().toUpperCase().replace(" ", "");
-								//VERIFICAÇÃO DE BIS DUPLICADOS
+								// VERIFICAÇÃO DE BIS DUPLICADOS
 								ler.nextLine();
 								System.out.println("Nome do Cliente:");
 								String nome = ler.nextLine().toUpperCase();
-								//ler.nextLine();
+								// ler.nextLine();
 								System.out.println("Número de telemóvel Cliente");
-								String numeroTel = "+" + ler.nextLine().replace(" ", "");;
+								String numeroTel = "+" + ler.nextLine().replace(" ", "");
+								;
 								System.out.println("E-mail");
-								String email= "+" + ler.next().replace(" ", "");;
+								String email = "+" + ler.next().replace(" ", "");
+								;
 								ler.nextLine();
-								Cliente cl = new Cliente(codigo, bi, nome, numeroTel, email,compras);
+								Cliente cl = new Cliente(codigo, bi, nome, numeroTel, email, compras);
 								opCliente.adicionarCliente(clientes, cl);
 								break;
 							case 2:
@@ -221,18 +225,18 @@ public class Main {
 						int opcaoProduto;
 						do {
 							System.out.println(
-									"OPERAÇÕES PRODUTO\n1. Encomendar produto\n2. Actualizar Produto\n3. Remover Produto\n4. Pesquisar Produto\n5. Emitir Relatórios do Stock\n6. Ver todos os produtos\n0. SAIR E SALVAR ALTERAÇÕES\n>>>");
+									"\n\t-----OPERAÇÕES PRODUTO-----\n1. Encomendar produto\n2. Actualizar Produto\n3. Remover Produto\n4. Pesquisar Produto\n5. Emitir Relatórios do Stock\n6. Ver todos os produtos\n0. SAIR E SALVAR ALTERAÇÕES\n>>>");
 							opcaoProduto = ler.nextInt();
 							switch (opcaoProduto) {
 							case 0:
-							
+
 								boolean gravou = opVitais.gravarObjecto(stock, caminhoProduto);
 
 								break;
 							case 1:
 								// Adicionar produtos no Stock
 								// !AO ENCOMENDAR O PRODUTO PODE DEVE/PODE ESCOLHER A QUANTIDADE!
-								int codigo = stock.size();
+								int codigo = armazem.geracaoID(stock);
 								System.out.println("Quantidade da encomenda: ");
 								int qtd = ler.nextInt();
 								ler.nextLine();
@@ -292,13 +296,13 @@ public class Main {
 						} while (opcaoProduto != 0);// FIM DA OPERAÇÕES DE PRODUTOS
 
 						break;
-					case 3://VENDAS IGUALAR TEMPORARIO COM O QUE ESTÁ FORA
-						for (int i = 0; i < clientes.size() ; i++) {
+					case 3:// VENDAS IGUALAR TEMPORARIO COM O QUE ESTÁ FORA
+						for (int i = 0; i < clientes.size(); i++) {
 							System.out.println();
-							Cliente csa=(Cliente)clientes.get(i);
-							Compras comprer=(Compras)csa.getCompras().get(i);
-							Produto comprers=(Produto)comprer.getItens().get(i);
-							for (int j = 0; j < ((Cliente)clientes.get(i)).getCompras().size(); j++) {
+							Cliente csa = (Cliente) clientes.get(i);
+							Compras comprer = (Compras) csa.getCompras().get(i);
+							Produto comprers = (Produto) comprer.getItens().get(i);
+							for (int j = 0; j < ((Cliente) clientes.get(i)).getCompras().size(); j++) {
 //								System.out.println( (Produto)((Cliente)clientes.get(i)).getCompras().get(j).  );								
 //								System.out.println(((Produto)((Cliente)clientes.get(i)).getCompras().get(j)).toString());
 							}
