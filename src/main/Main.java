@@ -107,7 +107,10 @@ public class Main {
 							System.out.println("Qual é o código do produto que pretende remover no carrinho?");
 							int code = ler.nextInt();
 							//REMOÇÃO DEVOLVE TODOS OS CARRINHOS AO STOCK TEMPORÁRIO
-							operacoesCart.removerProduto(code, cart);
+							//REMOVER TUDO OU 1?
+							//operacoesCart.removerProduto(code, cart);
+							
+							operacoesCart.removerProdutoQuantidade(code, cart,stockTemporario,2);
 							break;
 						case 3:
 							System.out.println("ITENS DO CARRINHO");

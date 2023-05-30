@@ -7,24 +7,26 @@ import produto.Produto;
 import produto.Stock;
 
 public class OperacoesCarrinho {
+	
 	public Vector adicionarProduto(int index, Carrinho cart, Vector lista, int quantidade) {
 		Stock stock = new Stock();
 		Vector carrinho = cart.getProdutos();
 		Produto encontrado = ((Produto) lista.get(index));
-		Produto adicionar=new Produto(index,encontrado.getNome(),quantidade,encontrado.getPreco());
+		Produto adicionar = new Produto(index, encontrado.getNome(), quantidade, encontrado.getPreco());
 		int indexExiste = verificaExistenciaCarinho(index, cart, lista);
-		boolean situacaoStock=verificacaoQuantidade(index,lista,quantidade);
-		
+		boolean situacaoStock = verificacaoQuantidade(index, lista, quantidade);
+
 		if (situacaoStock) {
 			if (indexExiste != -1) {
-				encontrado.setQtd(encontrado.getQtd()-quantidade);
-				((Produto)carrinho.get(indexExiste)).setQtd((((Produto)carrinho.get(indexExiste))).getQtd()+quantidade);
-			}else{
-				encontrado.setQtd(encontrado.getQtd()-quantidade);
+				encontrado.setQtd(encontrado.getQtd() - quantidade);
+				((Produto) carrinho.get(indexExiste))
+						.setQtd((((Produto) carrinho.get(indexExiste))).getQtd() + quantidade);
+			} else {
+				encontrado.setQtd(encontrado.getQtd() - quantidade);
 				carrinho.add(adicionar);
-				
+
 			}
-		} 
+		}
 		return carrinho;
 //
 //		if (cart.getProdutos().contains((Produto) lista.get(index))) {
@@ -45,8 +47,6 @@ public class OperacoesCarrinho {
 //			}
 //
 //		}
-
-	
 
 //	int id=stock.procurarCodigo(lista, prod.getId());
 //	int qtd=prod.getQtd();//Recebe a quantidade do produto que estou prestes a inserir
@@ -71,11 +71,11 @@ public class OperacoesCarrinho {
 			System.out.println("Acabou o stock com! Tente outra quantidade");
 			return false;
 
-		} else if(quantidade<0) {
+		} else if (quantidade < 0) {
 			System.out.println("Insira uma quantidade válida");
 			return false;
-		}else {
-						return true;
+		} else {
+			return true;
 		}
 	}
 
@@ -91,11 +91,13 @@ public class OperacoesCarrinho {
 		return -1;
 	}
 
-	//A remoção devolve a quantidade de produtos a todos eles
-	public Vector removerProduto(int id, Carrinho cart) {
+	// A remoção devolve a quantidade de produtos
+	public Vector removerProduto(int id, Carrinho cart, Vector temporario) {
+		int index = procuraProdutoCarrinho(id, cart.getProdutos());
 		for (int i = 0; i < cart.getProdutos().size(); i++) {
 			// && ((Produto)cart.getProdutos().get(i)).getQtd()
 			if (((Produto) cart.getProdutos().get(i)).getId() == id) {
+
 				cart.getProdutos().remove(i);
 				System.out.println("ECONTRAMOS");
 				return cart.getProdutos();
@@ -104,6 +106,43 @@ public class OperacoesCarrinho {
 		System.out.println("NÃO ECONTRAMOS");
 
 		return cart.getProdutos();
+	}
+
+	public Vector removerProdutoQuantidade(int id, Carrinho cart, Vector temporario, int quantidade) {
+		Vector carrinho = cart.getProdutos();
+		int index = procuraProdutoCarrinho(id, carrinho);
+
+		Stock stock = new Stock();
+		int indexStock = stock.procurarCodigo(temporario, id);
+		// IF TEM NO CARRINHO E NO STOCK DEVOLVE QUANTIDADE DE STOCK E DIMINUI A
+		// QUANTIDADE NO CARRINHO
+		if (index != -1) {// Caso encontre no carrinho
+			if (((Produto) carrinho.get(index)).getId() == ((Produto) temporario.get(indexStock)).getId()) {// Se tem no
+																											// carrinho,
+																											// tem no
+																											// stock
+				((Produto) temporario.get(indexStock)).setQtd(
+						((Produto) temporario.get(indexStock)).getQtd() + quantidade);
+				((Produto) carrinho.get(index)).setQtd(((Produto) carrinho.get(index)).getQtd() - quantidade);
+				// ((Produto) temporario.get(indexStock)).setQtd(2);
+				if (((Produto) carrinho.get(index)).getQtd() < 0) {
+					carrinho.remove(index);
+				}
+			}
+		} else {
+			System.out.println("Produto não está no carrinho");
+		}
+
+		return cart.getProdutos();
+	}
+
+	public int procuraProdutoCarrinho(int id, Vector carrinho) {
+		for (int i = 0; i < carrinho.size(); i++) {
+			if (((Produto) carrinho.get(i)).getId() == id) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	public void listarItensCarrinho(Carrinho cart) {

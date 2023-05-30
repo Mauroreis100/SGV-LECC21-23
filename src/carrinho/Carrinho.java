@@ -6,7 +6,8 @@ import produto.Produto;
 public class Carrinho implements Serializable{
 private String nome;//Nome do Shopping;Location
 private double iva;
-private double total;
+private double multi;//Multiplicação entre a quantidade e o preço do produto
+private double total;//Total de todos so produtos inseridos?
 private Vector produtos;
 public Carrinho(String nome, Vector produtos) {
 	this.nome = nome;
