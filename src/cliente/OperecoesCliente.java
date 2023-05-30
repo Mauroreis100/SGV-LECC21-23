@@ -1,11 +1,13 @@
 package cliente;
 
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
 
 import carrinho.Carrinho;
 import produto.Produto;
 import compras.Compras;
+
 public class OperecoesCliente {
 
 	public Vector adicionarCliente(Vector lista, Cliente cl) {
@@ -17,6 +19,17 @@ public class OperecoesCliente {
 			System.out.println("Cliente com este BI já existe");
 			return lista;
 		}
+	}
+
+	public int geracaoID(Vector lista) {
+		Random random = new Random();
+		int id = random.nextInt(101);
+		for (int i = 0; i < lista.size(); i++) {
+			if (((Cliente) lista.get(i)).getId() == id) {
+				return geracaoID(lista);
+			}
+		}
+		return id;
 	}
 
 	public int procuraBI(Vector lista, String bi) {
@@ -84,7 +97,7 @@ public class OperecoesCliente {
 					escolha = input.nextInt();
 					switch (escolha) {
 					case 0:
-						
+
 						break;
 					case 1:
 						System.out.println("Insira o nome do cliente:");
@@ -146,51 +159,9 @@ public class OperecoesCliente {
 			for (int j = 0; j < compras.size(); j++) {
 				valorTotal += ((Compras) compras.get(j)).getTotal();
 			}
-		}else {
+		} else {
 			System.out.println("Este Cliente não existe");
 		}
 
 	}
-
-	// TENHO DE APLICAR IVA AQUI
-
-//	  //Verificar existencia do cliente public boolean
-//	  verificarExistenciaCliente(Cliente cliente,Vector clientes,int
-//	  codigoIdentificacao) { for(int i=0;i<clientes.size();i++) {
-//	  if(((Cliente)clientes.get(i)).getCodigoIdentificacao()==codigoIdentificacao)
-//	  { return true; } } return false; }
-//	  
-//	  //Registrar um novo cliente - Create public void registrarCliente(Cliente
-//	  cliente,Vector clientes,Calendar data_criacao) {
-//	  if(verificarExistenciaCliente(cliente, clientes, 0)==true) {
-//	  clientes.add(cliente); data_criacao.getTime();
-//	  System.out.println("Cliente adicionado com sucesso!"); }else {
-//	  System.out.println("Cliente existente!"); } }
-//	  
-//	  //Editar algum dado do cliente - Update 
-//	  
-//	  
-//	  // Pesquisar cliente pelo código public Object pesquisarCliente(Cliente
-//	  cliente,Vector clientes, int codigoIdentificacao) { Cliente client=null;
-//	  for(int i=0;i<clientes.size();i++) {
-//	  if(((Cliente)clientes.get(i)).getCodigoIdentificacao()==codigoIdentificacao)
-//	  { cliente=(Cliente)clientes.get(i); } } return client; }
-//	  
-//	  // Adicionando cada compra ao vector deste Cliente public boolean
-//	  adicionarCompra(Cliente cliente,Vector clientes, int codigoIdentificacao,
-//	  Vendas compra) { for (int i = 0; i < clientes.size(); i++) { if ((((Cliente)
-//	  clientes.get(i)).getCodigoIdentificacao())==codigoIdentificacao) { ((Cliente)
-//	  clientes.get(i)).getCompras().add(compra); return true; } } return false; }
-//	  
-//	  //Verificar as compras feitas pelo cliente public void
-//	  verComprasFeitas(Cliente cliente,int codigoIdentificacao,Vector
-//	  compras,Vector clientes) {
-//	  if(verificarExistenciaCliente(cliente,null,codigoIdentificacao)==true) {
-//	  for(int i=0;i<compras.size();i++) {
-//	  if(((Cliente)clientes.get(i)).getCodigoIdentificacao()==codigoIdentificacao)
-//	  { Cliente client=(Cliente)clientes.get(i);
-//	  System.out.println(client.getCompras()); //or
-//	  System.out.println(client.getCompras().toString()); break; } } } }
-//	  
-
 }

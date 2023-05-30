@@ -1,6 +1,7 @@
 package cliente;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Vector;
 
 import carrinho.Carrinho;
@@ -8,22 +9,40 @@ import carrinho.Carrinho;
 public class Cliente implements Serializable{
 
 	private int id;
-	private String nome, bi;
+	private String nome, bi, email;
 	private String numeroTel;
 	private Vector compras=new Vector();
-	//SEXO !!!!!!!
+	private Calendar data_Criacao;
 
 	/*
 	 * O cliente tem um vector de todas as compras já feitas Caso tenha de recuperar
 	 * ou iniicializar pela primeira vez, este construtor leva o vector, vazio ou
 	 * não
 	 */
-	public Cliente(int id, String bi, String nome, String numeroTel,Vector compras) {
+	public Cliente(int id, String bi, String nome, String numeroTel,String email,Vector compras) {
 		this.id = id;
 		this.bi = bi;
 		this.numeroTel=numeroTel;
+this.email=email;
+this.data_Criacao=data_Criacao;
 		this.nome = nome;
 		this.compras = compras;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Calendar getData_Criacao() {
+		return data_Criacao;
+	}
+
+	public void setData_Criacao(Calendar data_Criacao) {
+		this.data_Criacao = data_Criacao;
 	}
 
 	public String getNumeroTel() {
@@ -68,7 +87,10 @@ public class Cliente implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Cliente [id=" + id + ", bi="+bi+", nome=" + nome +", numeroTel="+numeroTel+"]";
+		return "Cliente [ID=" + id + "\t | Nome=" + nome + "\t | BI=" + bi + "\t | E-mail=" + email + "\t | Telemóvel=" + numeroTel
+				+ "\t | CRIADO AOS =" + data_Criacao + "]";
 	}
+
+
 
 }

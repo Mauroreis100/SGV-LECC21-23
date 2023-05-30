@@ -63,24 +63,23 @@ public class Main {
 		int id;// Usando variavel id para todos requisitos
 		do {// OPERAÇÕES PRINCIPAL E TELA DE BEM-VINDO
 			System.out.println(
-					"BEM VINDO A LOJA XXXXXX\n SELECCIONE A SUA OPÇÃO\n1.Comprar\n2. Mais Opções(Cliente/Produto/Vendas)\n0. SAIR\n>>>");
+					"\t-----\tBEM-VINDO(A) AO SUPERMERCADO LECC21\t-----\n SELECCIONE A SUA OPÇÃO\n1.Comprar\n2. Mais Opções(Cliente/Produto/Vendas)\n0. SAIR DO PROGRAMA\n>>> ");
 			operacao = ler.nextInt();
-			int procuraID = -1;
 			int procuraCodigo = -1;
 			switch (operacao) {
 			case 1:
 				// Instância Vector dos Produtos no Carrinho. Não recupera nada. guarda tudo na
 				// mémoria temporária
 				Vector carrinho = new Vector();
-				System.out.println("\nIDENTIFIQUE-SE USANDO O CÓDIGO LECC");
+				System.out.print("\nIDENTIFIQUE-SE USANDO O CÓDIGO LECC\n>>>");
 				// int identificacao=ler.nextInt();
 				int codeLECC = ler.nextInt();
 				procuraCodigo = opCliente.procuraID(clientes, codeLECC);
 				if (procuraCodigo != -1) {
 					int opcoesCarrinho;
 					do {
-						System.out.println(
-								"CARRINHO\n1. Adicionar produto no carrinho\n2. Remover Produto do carrinho\n3. Ver produtos no carrinho\n\n4. Ver produtos disponíveis\n5. Finalizar Compra\n0. CANCELAR\n>>>");
+						System.out.print(
+								"\nBEM-VINDO(A)"+((Cliente)clientes.get(procuraCodigo)).getNome()+"-----\tESCOLHA A SUA OPERAÇÃO DE CARRINHO\t------\n1. Adicionar produto no carrinho\n2. Remover Produto do carrinho\n3. Ver produtos no carrinho\n4. Ver produtos disponíveis\n5. Finalizar Compra\n0. CANCELAR\n>>> ");
 						opcoesCarrinho = ler.nextInt();
 
 						Vector stockTemporario = stock;
@@ -141,15 +140,15 @@ public class Main {
 
 				do {// OPERAÇÕES MAIS OPERAÇÕES
 					System.out.println("-----\tOPÇÕES\t-----");
-					System.out.println("MENU\n1. Clientes\n2. Produtos\n3. Vendas\n0. Sair\n>>>");
+					System.out.print("\n1. Clientes\n2. Produtos\n3. Vendas\n0. Sair\n>>> ");
 					opcoes = ler.nextInt();
 					switch (opcoes) {
 					case 1:
 						int opcaoCliente;
 						do {// OPERAÇÕES DOS CLIENTES
 
-							System.out.println(
-									"OPERAÇÕES CLIENTE\n1. Criar Cliente\n2. Actualizar Cliente\n3. Remover Cliente\n4. Pesquisar Cliente\n5. Ver todos os clientes\n6. Ver conta Correne do Cliente\n0. SAIR E SALVAR ALTERAÇÕES\n>>>");
+							System.out.print(
+									"\nOPERAÇÕES CLIENTE\n1. Criar Cliente\n2. Actualizar Cliente\n3. Remover Cliente\n4. Pesquisar Cliente\n5. Ver todos os clientes\n6. Ver conta Correne do Cliente\n0. SAIR E SALVAR ALTERAÇÕES\n>>> ");
 							opcaoCliente = ler.nextInt();
 							switch (opcaoCliente) {
 							case 0:
@@ -157,19 +156,22 @@ public class Main {
 								break;
 							case 1:
 								// 1-INSERIR CLIENTE
-								Vector compras = new Vector();
-
-								int codigo = clientes.size();
+								Vector compras = new Vector();//Vector vazio com compras do Cliente novo
+								//GERAÇÃO DE ID
+								int codigo = opCliente.geracaoID(clientes);
 								System.out.println("BI DO CLIENTE:");
 								String bi = ler.next().toUpperCase().replace(" ", "");
+								//VERIFICAÇÃO DE BIS DUPLICADOS
 								ler.nextLine();
 								System.out.println("Nome do Cliente:");
-								String nome = ler.next().toUpperCase();
-								ler.nextLine();
+								String nome = ler.nextLine().toUpperCase();
+								//ler.nextLine();
 								System.out.println("Número de telemóvel Cliente");
-								String numeroTel = "+" + ler.next();
+								String numeroTel = "+" + ler.nextLine().replace(" ", "");;
+								System.out.println("E-mail");
+								String email= "+" + ler.next().replace(" ", "");;
 								ler.nextLine();
-								Cliente cl = new Cliente(codigo, bi, nome, numeroTel, compras);
+								Cliente cl = new Cliente(codigo, bi, nome, numeroTel, email,compras);
 								opCliente.adicionarCliente(clientes, cl);
 								break;
 							case 2:
