@@ -1,6 +1,10 @@
 package carrinho;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Vector;
 
 import cliente.Cliente;
@@ -46,10 +50,10 @@ public class OperacoesCarrinho {
 			Produto encontrado = ((Produto) lista.get(posicao));
 
 			if (quantidade > encontrado.getQtd()) {
-				System.out.println("Em stock só tem " + encontrado.getQtd() + " de " + encontrado.getNome());
+				System.out.println("A quantidade pretendida de " + encontrado.getNome()+" não esta disponível, apenas tem "+encontrado.getQtd());
 				return false;
 			} else if (encontrado.getQtd() < 0) {
-				System.out.println("Acabou o stock com! Tente outra quantidade");
+				System.out.println("O produto"+ encontrado.getNome() +" que esta a tentar vender não tem disponibilidade");
 				return false;
 
 			} else if (quantidade < 0) {
@@ -153,23 +157,47 @@ public Produto produtoStock(int id, Vector lista) {
 		}
 		return true;
 	}
-
-	public boolean vendaDinheiro(Vector carrinho, Cliente cl) {
-
+public Vector actualizarVendas(Vector carrinho, Vector produtos) {
+	for (int i = 0; i < carrinho.size(); i++) {
+		for (int j = 0; j < produtos.size(); j++) {
+			if(((Carrinho)carrinho.get(i)).getId()==((Produto)produtos.get(j)).getId()) {
+				((Produto)produtos.get(j)).setVendas((((Produto) produtos.get(j)).getVendas() + 1) );
+				
+				return produtos;
+			}
+			
+		}
+	}
+	return produtos;
+}
+public int geracaoID(Vector lista) {
+	Random random = new Random();
+	int id = random.nextInt(101);
+	for (int i = 0; i < lista.size(); i++) {
+		if (((Compras) lista.get(i)).getId() == id) {
+			return geracaoID(lista);
+		}
+	}
+	return id;
+}
+	public boolean vendaDinheiro(int id,Vector carrinho, Cliente cl) {
 		double total = 0;
 		Vector compraCliente = cl.getCompras();
-		System.out.println(compraCliente.toString());
 		for (int i = 0; i < carrinho.size(); i++) {
-			total += ((Produto) carrinho.get(i)).getPreco();
-			((Produto) carrinho.get(i)).setVendas(((Produto) carrinho.get(i)).getVendas() + 1);
+			total += ((Carrinho) carrinho.get(i)).getTotal();
 		}
-		System.out.println("TOTAL= " + total);
+		
+		
 		if (estaVazio(carrinho)) {
-			// compra.setTotal(total * (17 / 100));
-			//
-			Compras venda = new Compras(1, cl.getId(), cl.getNome(), carrinho, total);
+			Calendar cal=Calendar.getInstance();
+			Compras venda = new Compras(cal,id, cl.getId(), cl.getNome(), carrinho, (total+total*0.17));
 			cl.getCompras().add(venda);
-			System.out.println("Compra feita com sucesso");
+
+//			System.out.println( ((Compras)cl.getCompras().get(0)).toString() );
+			System.out.println("\nSEM IVA: "+total+"\nACRÉSCIMO DE IVA: " + total*0.17+"\nTOTAL="+(total+total*0.17));
+			
+			System.out.println(((Compras)cl.getCompras().get(cl.getCompras().size()-1)).toString());
+			System.out.println("Compra feita com sucesso\n");
 			return true;
 		}
 		return false;

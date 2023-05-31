@@ -1,17 +1,19 @@
 package cliente;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Vector;
 
 import carrinho.Carrinho;
 
-public class Cliente implements Serializable{
+public class Cliente implements Serializable {
 
 	private int id;
 	private String nome, bi, email;
 	private String numeroTel;
-	private Vector compras=new Vector();
+	private Vector compras = new Vector();
 	private Calendar data_Criacao;
 
 	/*
@@ -19,12 +21,13 @@ public class Cliente implements Serializable{
 	 * ou iniicializar pela primeira vez, este construtor leva o vector, vazio ou
 	 * não
 	 */
-	public Cliente(int id, String bi, String nome, String numeroTel,String email,Vector compras) {
+	public Cliente(Calendar data_Criacao, int id, String bi, String nome, String numeroTel, String email,
+			Vector compras) {
 		this.id = id;
 		this.bi = bi;
-		this.numeroTel=numeroTel;
-this.email=email;
-this.data_Criacao=data_Criacao;
+		this.numeroTel = numeroTel;
+		this.email = email;
+		this.data_Criacao = data_Criacao;
 		this.nome = nome;
 		this.compras = compras;
 	}
@@ -87,10 +90,12 @@ this.data_Criacao=data_Criacao;
 
 	@Override
 	public String toString() {
-		return "Cliente [ID=" + id + "\t | Nome=" + nome + "\t | BI=" + bi + "\t | E-mail=" + email + "\t | Telemóvel=" + numeroTel
-				+ "\t | CRIADO AOS =" + data_Criacao + "]";
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		return "Cliente [CRIADO EM: "+dateFormat.format(data_Criacao.getTime())+"\t | ID=" + id + "\t | Nome=" + nome + "\t | BI=" + bi + "\t | E-mail=" + email + "\t | Telemóvel="
+				+ numeroTel +"]";
 	}
-
-
+	public String curtoString() {
+		return "\n\n------ID:"+id+"\tNome: "+nome;
+	}
 
 }

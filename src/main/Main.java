@@ -5,6 +5,9 @@ import produto.Stock;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
@@ -17,7 +20,9 @@ import compras.Compras;
 public class Main {
 //ver situação de IDS
 	public static void main(String[] args) {
-
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		System.out.println(dateFormat.format(cal.getTime()));
 		// Instância de operações comuns
 		OperacoesVitais opVitais = new OperacoesVitais();
 		// Instância Vector dos Clientes (Eventualmente deve recuperar do ficheiro de
@@ -39,6 +44,12 @@ public class Main {
 			stock = (Vector) opVitais.recuperarObjecto(caminhoProduto);
 		}
 
+		Vector vendas = new Vector();
+		String caminhoVendas= "Vendas\\VendasDB.txt";
+		File fileVendas = new File(caminhoVendas);
+		if (fileVendas.length() != 0) {
+			vendas = (Vector) opVitais.recuperarObjecto(caminhoVendas);
+		}
 		// Instância de Operações do Vector Clientes
 		OperecoesCliente opCliente = new OperecoesCliente();
 
@@ -78,7 +89,8 @@ public class Main {
 				if (procuraCodigo != -1) {
 					int opcoesCarrinho;
 					do {
-						System.out.print("\n BEM-VINDO(A) ("+((Cliente) clientes.get(procuraCodigo)).getId()+") " + ((Cliente) clientes.get(procuraCodigo)).getNome()+" "
+						System.out.print("\n BEM-VINDO(A) (" + ((Cliente) clientes.get(procuraCodigo)).getId() + ") "
+								+ ((Cliente) clientes.get(procuraCodigo)).getNome() + " "
 								+ "\n-----\tESCOLHA A SUA OPERAÇÃO DE CARRINHO\t------\n1. Adicionar produto no carrinho\n2. Remover Produto do carrinho\n3. Ver produtos no carrinho\n4. Ver produtos disponíveis\n5. Finalizar Compra\n0. CANCELAR\n>>> ");
 						opcoesCarrinho = ler.nextInt();
 
@@ -96,7 +108,8 @@ public class Main {
 								// cart.getProdutos().add(((Produto) stock.get(index)));
 								int quantidade = ler.nextInt();
 								// Index do produto no stock
-								operacoesCart.adicionarProduto(((Produto) stock.get(index)).getId(), carrinho, stockTemporario, quantidade);
+								operacoesCart.adicionarProduto(((Produto) stock.get(index)).getId(), carrinho,
+										stockTemporario, quantidade);
 								// DEVE MULTIPLICAR OS PRODUTOS PELA QUANTIDADE
 							} else {
 								System.out.println("Produto não está em stock");
@@ -121,9 +134,13 @@ public class Main {
 							break;
 						case 5:
 							// AUMENTAR VENDA e GRAVAR A COMPRA NO CLIENTE QUE ESTÁ A USAR O PROGRAMA
-							if (operacoesCart.vendaDinheiro(carrinho, (Cliente) clientes.get(procuraCodigo))) {
+							int idCompra=operacoesCart.geracaoID(vendas);
+							if (operacoesCart.vendaDinheiro(idCompra,carrinho, (Cliente) clientes.get(procuraCodigo))) {
+								operacoesCart.actualizarVendas(carrinho, stockTemporario);
 								boolean record = opVitais.gravarObjecto(stockTemporario, caminhoProduto);
 								boolean gravou = opVitais.gravarObjecto(clientes, caminhoClientes);
+								
+								boolean registado = opVitais.gravarObjecto(vendas, caminhoVendas);
 
 							} else {
 								System.out.println("\nErro na compra, contacte o suporte ao cliente!\n\n");
@@ -133,8 +150,9 @@ public class Main {
 							break;
 						}
 					} while (opcoesCarrinho != 0);
-				}else {
-					System.out.println("-----------------------------------\nCLIENTE COM CÓDIGO "+codeLECC+" NÃO CADASTRADO! TENTE DE NOVO\n------------------------------------");
+				} else {
+					System.out.println("-----------------------------------\nCLIENTE COM CÓDIGO " + codeLECC
+							+ " NÃO CADASTRADO! TENTE DE NOVO\n------------------------------------");
 				}
 				break;
 			case 2:
@@ -175,7 +193,7 @@ public class Main {
 								String email = "+" + ler.next().replace(" ", "");
 								;
 								ler.nextLine();
-								Cliente cl = new Cliente(codigo, bi, nome, numeroTel, email, compras);
+								Cliente cl = new Cliente(cal,codigo, bi, nome, numeroTel, email, compras);
 								opCliente.adicionarCliente(clientes, cl);
 								break;
 							case 2:
@@ -210,9 +228,9 @@ public class Main {
 								System.out.println("Insira o código de identificação do cliente:");
 								int codigoCl = ler.nextInt();
 								int getCode = opCliente.procuraID(clientes, codigoCl);
-								if (getCode != -1) {
-
-								}
+								
+									opCliente.verContaCorrente(clientes, getCode);
+								
 								break;
 							default:
 								break;
@@ -246,7 +264,7 @@ public class Main {
 								ler.nextLine();
 
 								System.out.println("Nome do produto que pretende encomendar: ");
-								String nomeProduto = ler.nextLine();
+								String nomeProduto = ler.nextLine().toUpperCase();
 
 								Produto prod = new Produto(codigo, nomeProduto, qtd, preco);
 								armazem.adicionarNovoProduto(stock, prod);
@@ -278,13 +296,11 @@ public class Main {
 							case 5:
 								// Emitir Relatórios do Stock (produtos abaixo de 5 unidades e produtos mais
 								// vendidos)
-								System.out.println("PRODUTOS ABAIXO DE 5 UNIDADES! RESTOCK!!");
+								System.out.println("OS PRODUTOS ABAIXO DE 5 UNIDADES SÃO:");
 								armazem.abaixoDe5(stock);
 
-								System.out.println("Listagem de quantos produtos mais vendidos?");
-								int quantos = ler.nextInt();
-								armazem.maisVendidos(stock, quantos);
-
+								System.out.println("\nListagem de quantos produtos mais vendidos(EM ORDEM CRESCENTE): ");
+								armazem.maisVendidos(stock);
 								break;
 							case 6:
 								armazem.imprimirTodos(stock);
