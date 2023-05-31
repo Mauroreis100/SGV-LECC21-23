@@ -95,9 +95,15 @@ public class OperecoesCliente {
 						System.out.println("Insira o novo nº de BI para o cliente:");
 						String bi = input.next().toUpperCase();
 						input.nextLine();
-						((Cliente) clientes.get(index)).setBi(bi);
-						System.out.println(
-								"Código de identificação atualizado para: " + ((Cliente) clientes.get(index)).getBi());
+						int indice = procuraBI(clientes, bi);
+						if(indice!=-1) {
+							((Cliente) clientes.get(index)).setBi(bi);
+							System.out.println(
+									"Código de identificação atualizado para: " + ((Cliente) clientes.get(index)).getBi());
+							
+						}else {
+							System.out.println("Número de BI já existente!");
+						}
 						break;
 					case 3:
 						System.out.println("Insira o novo número de telefone do cliente:");
@@ -141,6 +147,7 @@ public class OperecoesCliente {
 		if (index != -1) {
 			Vector compras = ((Cliente) clientes.get(index)).getCompras();
 			for (int j = 0; j < compras.size(); j++) {
+				System.out.println(((Compras) compras.get(j)).toString());
 				valorTotal += ((Compras) compras.get(j)).getTotal();
 			}
 			System.out.println(((Cliente) clientes.get(index)).curtoString()+" já gastou "+valorTotal+",00MT");

@@ -45,7 +45,7 @@ public class Main {
 		}
 
 		Vector vendas = new Vector();
-		String caminhoVendas= "Vendas\\VendasDB.txt";
+		String caminhoVendas = "Vendas\\VendasDB.txt";
 		File fileVendas = new File(caminhoVendas);
 		if (fileVendas.length() != 0) {
 			vendas = (Vector) opVitais.recuperarObjecto(caminhoVendas);
@@ -134,12 +134,13 @@ public class Main {
 							break;
 						case 5:
 							// AUMENTAR VENDA e GRAVAR A COMPRA NO CLIENTE QUE ESTÁ A USAR O PROGRAMA
-							int idCompra=operacoesCart.geracaoID(vendas);
-							if (operacoesCart.vendaDinheiro(idCompra,carrinho, (Cliente) clientes.get(procuraCodigo))) {
+							int idCompra = operacoesCart.geracaoID(vendas);
+							if (operacoesCart.vendaDinheiro(idCompra, carrinho,
+									(Cliente) clientes.get(procuraCodigo))) {
 								operacoesCart.actualizarVendas(carrinho, stockTemporario);
 								boolean record = opVitais.gravarObjecto(stockTemporario, caminhoProduto);
 								boolean gravou = opVitais.gravarObjecto(clientes, caminhoClientes);
-								
+
 								boolean registado = opVitais.gravarObjecto(vendas, caminhoVendas);
 
 							} else {
@@ -193,7 +194,7 @@ public class Main {
 								String email = "+" + ler.next().replace(" ", "");
 								;
 								ler.nextLine();
-								Cliente cl = new Cliente(cal,codigo, bi, nome, numeroTel, email, compras);
+								Cliente cl = new Cliente(cal, codigo, bi, nome, numeroTel, email, compras);
 								opCliente.adicionarCliente(clientes, cl);
 								break;
 							case 2:
@@ -227,10 +228,10 @@ public class Main {
 								// Ver conta corrente do Cliente (Tudo que já comprou em valores)
 								System.out.println("Insira o código de identificação do cliente:");
 								int codigoCl = ler.nextInt();
-								int getCode = opCliente.procuraID(clientes, codigoCl);
-								
-									opCliente.verContaCorrente(clientes, getCode);
-								
+								//int getCode = opCliente.procuraID(clientes, codigoCl);
+
+								opCliente.verContaCorrente(clientes, codigoCl);/// saiu
+
 								break;
 							default:
 								break;
@@ -299,7 +300,8 @@ public class Main {
 								System.out.println("OS PRODUTOS ABAIXO DE 5 UNIDADES SÃO:");
 								armazem.abaixoDe5(stock);
 
-								System.out.println("\nListagem de quantos produtos mais vendidos(EM ORDEM CRESCENTE): ");
+								System.out
+										.println("\nListagem de quantos produtos mais vendidos(EM ORDEM CRESCENTE): ");
 								armazem.maisVendidos(stock);
 								break;
 							case 6:
@@ -313,15 +315,14 @@ public class Main {
 
 						break;
 					case 3:// VENDAS IGUALAR TEMPORARIO COM O QUE ESTÁ FORA
+							// PIV EVERY VENDA
 						for (int i = 0; i < clientes.size(); i++) {
-							System.out.println();
-							Cliente csa = (Cliente) clientes.get(i);
-							Compras comprer = (Compras) csa.getCompras().get(i);
-							Produto comprers = (Produto) comprer.getItens().get(i);
 							for (int j = 0; j < ((Cliente) clientes.get(i)).getCompras().size(); j++) {
-//								System.out.println( (Produto)((Cliente)clientes.get(i)).getCompras().get(j).  );								
-//								System.out.println(((Produto)((Cliente)clientes.get(i)).getCompras().get(j)).toString());
+//								for (int k = 0; k < (Compra) ((Cliente)clientes.get(j)).getCompras().get(j); k++) {
+//									System.out.println("");
+//								}
 							}
+
 						}
 
 						break;
