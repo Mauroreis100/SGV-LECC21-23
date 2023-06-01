@@ -12,7 +12,7 @@ public class Compras implements Serializable{
 private int id,pertence;
 private String nome;
 private Calendar data_Criacao;
-private Vector itens=new Vector();
+private Vector itens=new Vector(); // Vector itens do carrinho
 public Calendar getData_Criacao() {
 	return data_Criacao;
 }

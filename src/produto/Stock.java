@@ -12,20 +12,17 @@ public class Stock {
 	 * Ao adicionar um produto novo ao STOCK deve - Pegar a lista - Ver se já existe
 	 * com o método existe(nome,lista) - Caso exista, apenas aumenta a quantidade
 	 * daquele produto - Caso não exista coloque um produto novo que vai ocupar uma
-	 * posição nova
+	 * posição nova, sim verifico o nome
 	 */
 	// Adicionar produtos no armazém
 	public Vector adicionarNovoProduto(Vector lista, Produto prod) {
 		if (existe(prod.getNome(), lista)) {
 			int index = procurarNome(prod.getNome(), lista);
 			System.out.println("Produto com este nome já existe, foi aumentada mais " + prod.getQtd() + " unidade(s)");
-			// Se encontrar retorna o booleano verdade
-
 			return aumentarQtd(lista, ((Produto) lista.elementAt(index)).getId(), prod.getQtd());
 		}
-		// prod.setQtd(prod.getQtd() + 1);
 		lista.add(prod);
-		return lista;
+		return lista; //Retorna a lista toda
 	}
 
 	/*
@@ -46,6 +43,7 @@ public class Stock {
 		return false;
 	}
 
+	//Procura com o nome já....
 	public int procurarNome(String nome, Vector lista) {
 		nome = nome.replace(" ", "");
 		for (int i = 0; i < lista.size(); i++) {
@@ -57,9 +55,9 @@ public class Stock {
 		return -1;
 	}
 
+	
+	// Este método simplesmente aumenta a quantidade de um produto 
 	public Vector aumentarQtd(Vector lista, int id, int qtd) {
-		// Este método simplesmente aumenta a quantidade de um produto por 1 ou mais no
-		// Stock
 		for (int i = 0; i < lista.size(); i++) {
 			if (((Produto) lista.get(i)).getId() == id) {
 				((Produto) lista.get(i)).setQtd(((Produto) lista.get(i)).getQtd() + qtd);
@@ -70,6 +68,7 @@ public class Stock {
 		return lista;
 	}
 
+	//Procura um produto pelo código
 	public int procurarCodigo(Vector lista, int codigo) {
 		for (int i = 0; i < lista.size(); i++) {
 			if (((Produto) lista.get(i)).getId() == codigo) {
@@ -79,6 +78,7 @@ public class Stock {
 		return -1;
 	}
 
+	//Remoção do produto pelo id
 	public boolean removerProduto(Vector lista, int codigo) {
 		int index = procurarCodigo(lista, codigo);
 		for (int i = 0; i < lista.size(); i++) {
@@ -92,6 +92,7 @@ public class Stock {
 		return false;
 	}
 
+	//Método para editar dados de um produto
 	public void editarDadoProduto(Vector lista, int codigo) {
 		int index = procurarCodigo(lista, codigo);
 		if (index != -1) {
@@ -102,10 +103,10 @@ public class Stock {
 				System.out.println("\nModifique o produto " + ((Produto) lista.get(index)).toString()
 						+ "\n1-Quantidade \n2-Preço \n3-Nome do Produto\n0.Sair");
 				escolha = input.nextInt();
-				input.nextLine();
+				
 				switch (escolha) {
 				case 0:
-
+System.out.println("<<<");
 					break;
 				case 1:
 					System.out.println("Insira a nova quantidade: ");
@@ -141,6 +142,7 @@ public class Stock {
 		}
 	}
 
+	//Mostra todos os produtos, abaixo de 5
 	public void abaixoDe5(Vector lista) {
 		for (int i = 0; i < lista.size(); i++) {
 			if (((Produto) lista.get(i)).getQtd() < 5) {
@@ -150,6 +152,8 @@ public class Stock {
 		}
 	}
 
+	//Lista todos os produtos mais vendidos de forma crescente. Isto usa o algoritmo de ordenação 
+	//
 	public void maisVendidos(Vector lista) {
 
 		Vector vendaDecrescente = lista;
@@ -173,6 +177,7 @@ public class Stock {
 
 	}
 
+	//Gerir ID aleatoriamente
 	public int geracaoID(Vector lista) {
 		Random random = new Random();
 		int id = random.nextInt(101);
@@ -184,6 +189,7 @@ public class Stock {
 		return id;
 	}
 
+	//Imprime todos os produtos
 	public void imprimirTodos(Vector lista) {
 		if (lista.size() > 0) {
 			System.out.println("\n---\t\t\tSTOCK\t---");

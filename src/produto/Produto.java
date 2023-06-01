@@ -1,27 +1,32 @@
 package produto;
-import java.io.Serializable;
-import java.util.Calendar;
+import java.io.Serializable; //Importação para gravar no ficheiro de objectos
 public class Produto implements Serializable{
 private int id;
-private String nome,tipo;
+private String nome;
 private int qtd;
-private int vendas;//Quantas vezes este produto foi vendido?
+private int vendas;// Váriavel que conta, quantas vezes o produto foi vendido
 private double preco;
-private Calendar calendar;
 
-/*No momento que lês para inserir um produto no vector
+	/*	
+No momento que lês para inserir um produto no vector
 Decidi não lidar com a quantidade,
 Para colocar no carrinho, a quantidade muda "Virtualmente"
 Ou seja não fez a mudança necessariamente porque pode remover do carrinho
 que seria devolver o produto a prateleira
-*/ 
-public Produto(int id,String nome) {
-	this.id=id;
-	//this.tipo=tipo;
-	this.nome=nome;
-	this.qtd=qtd;
-	this.vendas=vendas;
-}
+	*/ 
+	public Produto(int id,String nome) {
+		this.id=id;
+		//this.tipo=tipo; Categoria...
+		this.nome=nome;
+		this.qtd=qtd;
+		this.vendas=vendas;
+	}
+	public Produto(int id, String nome, int qtd,double preco) {
+		this.id = id;
+		this.nome = nome;
+		this.qtd = qtd;
+		this.preco=preco;
+	}
 
 public int getVendas() {
 	return vendas;
@@ -53,7 +58,7 @@ public int getQtd() {
 public void setQtd(int qtd) {
 	this.qtd = qtd;
 }
-//ToStrig para imprimir vendas
+//String para para imprimir vendas sim é igual ao toString
 public String imprimiVendas() {
 	StringBuilder builder = new StringBuilder();
 	builder.append("Produto [id=");
@@ -66,14 +71,7 @@ public String imprimiVendas() {
 	return builder.toString();
 }
 
-//TENHO CONSTRUTOR DE quantidade que será usado para recuperar (eu acho)
-public Produto(int id, String nome, int qtd,double preco) {
-	this.id = id;
-	this.nome = nome;
-	this.qtd = qtd;
-	this.preco=preco;
-}
-@Override
+@Override //String para imprimir as vendas
 public String toString() {
 	StringBuilder builder = new StringBuilder();
 	builder.append("Produto [ID=");
@@ -89,6 +87,8 @@ public String toString() {
 	builder.append("]");
 	return builder.toString();
 }
+
+//String para o carrinho, vem sem mostrar as vendas
 public String toCarrinho() {
 	StringBuilder builder = new StringBuilder();
 	builder.append("Produto [ID=");
@@ -102,6 +102,7 @@ public String toCarrinho() {
 	builder.append("");
 	return builder.toString();
 }
+
 public String gravacao() {
 	StringBuilder builder = new StringBuilder();
 	builder.append(" ");

@@ -9,7 +9,7 @@ import java.util.Vector;
 
 import produto.Produto;
 
-public class OperacoesVitais {
+public class OperacoesVitais {//Operações importantes 
 
 	public int procurarCodigo(Vector lista,int codigo) {
 		for (int i = 0; i < lista.size(); i++) {
@@ -20,13 +20,13 @@ public class OperacoesVitais {
 		return -1;
 	}
 	
+	//Método para gravar o objecto no caminho especificado
 	public static boolean gravarObjecto(Object obj, String caminho) {
 		File arquivo=new File(caminho);
 		if(! arquivo.exists()) {
 			try {
 				arquivo.createNewFile();
 			} catch (Exception e) {
-				// TODO: handle exception
 				e.printStackTrace();
 			}
 		}
@@ -46,6 +46,8 @@ public class OperacoesVitais {
 		}
 		
 	}
+
+//Método para gravar o objecto no caminho especificado
 	public static Object recuperarObjecto(String caminho) {
 		File arquivo=new File(caminho);
 		try {

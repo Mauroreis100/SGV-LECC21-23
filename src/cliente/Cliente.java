@@ -1,26 +1,25 @@
 package cliente;
 
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Vector;
+import java.io.Serializable; // //Importação para gravar no ficheiro de objectos
+import java.text.DateFormat; //Para me dar data actual do computador
+import java.text.SimpleDateFormat; //Para me dar data actual do computador
+import java.util.Calendar; //Para me dar data actual do computador
+import java.util.Vector; // Importação do vector
 
-import carrinho.Carrinho;
+import carrinho.Carrinho; // Importação do carrinho
 
 public class Cliente implements Serializable {
 
 	private int id;
 	private String nome, bi, email;
 	private String numeroTel;
-	private Vector compras = new Vector();
-	private Calendar data_Criacao;
+	private Vector compras = new Vector(); 
+	/* Compras = Carrinho, é um vector que adiciona o objecto carrinho 
+	 *  O carrinho tem produtos que o cliente adiciona e/ou remove
+	 * Ao acabar a conta ele carrega todo o carrinho
+	*/
 
-	/*
-	 * O cliente tem um vector de todas as compras já feitas Caso tenha de recuperar
-	 * ou iniicializar pela primeira vez, este construtor leva o vector, vazio ou
-	 * não
-	 */
+	private Calendar data_Criacao;
 	public Cliente(Calendar data_Criacao, int id, String bi, String nome, String numeroTel, String email,
 			Vector compras) {
 		this.id = id;
@@ -89,12 +88,12 @@ public class Cliente implements Serializable {
 	}
 
 	@Override
-	public String toString() {
+	public String toString() {//Não precisa de explicação...
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		return "Cliente [CRIADO EM: "+dateFormat.format(data_Criacao.getTime())+"\t | ID=" + id + "\t | Nome=" + nome + "\t | BI=" + bi + "\t | E-mail=" + email + "\t | Telemóvel="
 				+ numeroTel +"]";
 	}
-	public String curtoString() {
+	public String curtoString() {//Uma impressão que só me dá o id e o nome
 		return "\n\n------ID:"+id+"\tNome: "+nome;
 	}
 

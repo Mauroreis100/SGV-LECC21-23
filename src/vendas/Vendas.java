@@ -1,5 +1,7 @@
 package vendas;
-
+/*
+ * !!!ESSA CLASSE NÃO FOI USADA EM NENHUMA PARTE DA EXECUÇÃO DO PROGRAMA
+ */
 public class Vendas {
 private int id;
 private int qtd;
