@@ -9,12 +9,14 @@ import java.util.Vector;
 
 import cliente.Cliente;
 import compras.Compras;
+import interfaces.InterfaceOperacoes;
 import produto.Produto;
 import produto.Stock;
 
-public class OperacoesCarrinho {
+public class OperacoesCarrinho implements InterfaceOperacoes{
 	Stock stock = new Stock(); //Instância da classe de operações dos produtos=armazém=stock
-
+static final double iva=0.17;
+	
 	//Este é o método que adiciona o produto
 	/*Ele recebe:
 	id - do produto que quer adicionar
@@ -122,7 +124,7 @@ public Produto produtoStock(int id, Vector lista) {
 	/*Ideia de implementação:
 		Usar este método para quando, quiser tirar todo produto
 		(Quantidade ficar 0 no carrinho)
-		Chamando,  removerProdutoQuantidade(?,?,?,produto.quantidade)
+		Chamando,  removerProdutoQuantidade(ID,CARRINHO,vector temporario de produtos,produto.quantidade)
 	 */
 	// Método para remover o produto. Devolve o vector carrinho, caso remova ou não
 	public Vector removerProduto(int id, Vector carrinho, Vector temporario) {
@@ -214,7 +216,6 @@ public Vector actualizarVendas(Vector carrinho, Vector produtos) {
 		for (int j = 0; j < produtos.size(); j++) {
 			if(((Carrinho)carrinho.get(i)).getId()==((Produto)produtos.get(j)).getId()) {
 				((Produto)produtos.get(j)).setVendas((((Produto) produtos.get(j)).getVendas() + 1) );
-				
 				return produtos;
 			}
 			
@@ -226,7 +227,7 @@ public Vector actualizarVendas(Vector carrinho, Vector produtos) {
 //Gerar ID aleatoriamente
 public int geracaoID(Vector lista) {
 	Random random = new Random();
-	int id = random.nextInt(101);
+	int id = lista.size();
 	for (int i = 0; i < lista.size(); i++) {
 		if (((Compras) lista.get(i)).getId() == id) {
 			return geracaoID(lista);
@@ -261,9 +262,9 @@ public int geracaoID(Vector lista) {
 				-Vector carrinho
 				- e um total que é o total e o iva
 			*/
-			Compras venda = new Compras(cal,id, cl.getId(), cl.getNome(), carrinho, (total+total*0.17));
+			Compras venda = new Compras(cal,id, cl.getId(), cl.getNome(), carrinho, (total+total*iva));
 			cl.getCompras().add(venda);//Para o cliente especificado, adiciona a venda=carrinho=compras
-			System.out.println("\nSEM IVA: "+total+"\nACRÉSCIMO DE IVA: " + total*0.17+"\nTOTAL="+(total+total*0.17));
+			System.out.println("\nSEM IVA: "+total+"MZN\nACRÉSCIMO DE IVA: " + total*iva+"MZN\nTOTAL="+(total+total*iva)+"MZN");
 			System.out.println(((Compras)cl.getCompras().get(cl.getCompras().size()-1)).toString());
 			System.out.println("Compra feita com sucesso\n");
 			return true;

@@ -36,7 +36,7 @@ public class Main {
 		Vector clientes = new Vector();
 		
 		//Recuperação de todos os clientes
-		String caminhoClientes = "Cliente\\ClientesDB.txt";
+		String caminhoClientes = "Cliente\\ClientesDB.dat";
 		File fileClientes = new File(caminhoClientes);
 		if (fileClientes.length() != 0) { // Vê se está vazio
 			clientes = (Vector) opVitais.recuperarObjecto(caminhoClientes);
@@ -55,7 +55,7 @@ Stock armazem = new Stock();
 		Vector stock = new Vector();
 
 		//Recuperação de todos os Produtos
-		String caminhoProduto = "Produtos\\ProdutosDB.txt";
+		String caminhoProduto = "Produtos\\ProdutosDB.dat";
 		File fileProdutos = new File(caminhoProduto);
 		if (fileProdutos.length() != 0) {
 			stock = (Vector) opVitais.recuperarObjecto(caminhoProduto);
@@ -65,7 +65,7 @@ Stock armazem = new Stock();
 			Vector vendas = new Vector();
 
 		// Recuperação de todas as vendas
-		String caminhoVendas = "Vendas\\VendasDB.txt";
+		String caminhoVendas = "Vendas\\VendasDB.dat";
 		File fileVendas = new File(caminhoVendas);
 		if (fileVendas.length() != 0) {
 			vendas = (Vector) opVitais.recuperarObjecto(caminhoVendas);
@@ -101,7 +101,7 @@ Stock armazem = new Stock();
 								+ "\n-----\tESCOLHA A SUA OPERAÇÃO DE CARRINHO\t------\n1. Adicionar produto no carrinho\n2. Remover Produto do carrinho\n3. Ver produtos no carrinho\n4. Ver produtos disponíveis\n5. Finalizar Compra\n0. CANCELAR\n>>> ");
 						opcoesCarrinho = ler.nextInt();
 
-						Vector stockTemporario = stock; //Quero um vector stock temporário, que não vai actualizar até comprar
+						Vector stockTemporario = stock; //Um vector stock temporário, que não vai actualizar até comprar
 						switch (opcoesCarrinho) { 
 						case 1:
 							// Instancia do carrinho cheio de produtos
@@ -167,7 +167,7 @@ Stock armazem = new Stock();
 						int opcaoCliente;
 						do {
 							System.out.print(
-									"\n\t-----OPERAÇÕES CLIENTE-----\n1. Criar Cliente\n2. Actualizar Cliente\n3. Remover Cliente\n4. Pesquisar Cliente\n5. Ver todos os clientes\n6. Ver conta Correne do Cliente\n0. SAIR E SALVAR ALTERAÇÕES\n>>> ");
+									"\n\t-----OPERAÇÕES CLIENTE-----\n1. Criar Cliente\n2. Actualizar Cliente\n3. Remover Cliente\n4. Pesquisar Cliente\n5. Ver todos os clientes\n6. Ver conta Corrente do Cliente\n0. SAIR E SALVAR ALTERAÇÕES\n>>> ");
 							opcaoCliente = ler.nextInt();
 							switch (opcaoCliente) {
 							case 0:

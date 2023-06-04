@@ -7,15 +7,16 @@ import java.util.Vector;
 import carrinho.Carrinho;
 import produto.Produto;
 import compras.Compras;
+import interfaces.InterfaceOperacoes;
 
-public class OperecoesCliente {
+public class OperecoesCliente implements InterfaceOperacoes{
 
-	//Método para adicionar cliente
+	// Método para adicionar cliente
 	public Vector adicionarCliente(Vector lista, Cliente cl) {
 
-		int index = procuraBI(lista, cl.getBi());//Verifica se o cliente já existe
+		int index = procuraBI(lista, cl.getBi());// Verifica se o cliente já existe
 		if (index == -1 || lista.size() == 0) {
-			lista.add(cl);//Adiciona na lista
+			lista.add(cl);// Adiciona na lista
 			return lista;
 		} else {
 			System.out.println("Cliente com este BI já existe");
@@ -23,7 +24,7 @@ public class OperecoesCliente {
 		}
 	}
 
-	//Gerar id aleatorio
+	// Gerar id aleatorio
 	public int geracaoID(Vector lista) {
 		Random random = new Random();
 		int id = random.nextInt(101);
@@ -35,7 +36,7 @@ public class OperecoesCliente {
 		return id;
 	}
 
-	//Método para retornar posição do cliente com o BI
+	// Método para retornar posição do cliente com o BI
 	public int procuraBI(Vector lista, String bi) {
 		for (int i = 0; i < lista.size(); i++) {
 			if ((((Cliente) lista.get(i)).getBi()).equalsIgnoreCase(bi)) {
@@ -45,7 +46,7 @@ public class OperecoesCliente {
 		return -1;
 	}
 
-	//Método para retornar posição do cliente com o ID
+	// Método para retornar posição do cliente com o ID
 	public int procuraID(Vector lista, int id) {
 		for (int i = 0; i < lista.size(); i++) {
 			if ((((Cliente) lista.get(i)).getId()) == id) {
@@ -55,7 +56,7 @@ public class OperecoesCliente {
 		return -1;
 	}
 
-	//Método para apagar CLiente
+	// Método para apagar CLiente
 	public void apagarCliente(Vector lista, int id) {
 		int index = procuraID(lista, id);
 		if (index != -1) {
@@ -66,7 +67,7 @@ public class OperecoesCliente {
 		}
 	}
 
-	//Editar dados do cliente
+	// Editar dados do cliente
 	public void editarDadoCliente(Vector clientes, int id) {
 		int index = procuraID(clientes, id);
 
@@ -95,12 +96,12 @@ public class OperecoesCliente {
 						String bi = input.next().toUpperCase();
 						input.nextLine();
 						int indice = procuraBI(clientes, bi);
-						if(indice!=-1) {
+						if (indice != -1) {
 							((Cliente) clientes.get(index)).setBi(bi);
-							System.out.println(
-									"Código de identificação atualizado para: " + ((Cliente) clientes.get(index)).getBi());
-							
-						}else {
+							System.out.println("Código de identificação atualizado para: "
+									+ ((Cliente) clientes.get(index)).getBi());
+
+						} else {
 							System.out.println("Número de BI já existente!");
 						}
 						break;
@@ -125,7 +126,7 @@ public class OperecoesCliente {
 		}
 	}
 
-	//Imprimir todos os clientes
+	// Imprimir todos os clientes
 	public void imprimirTodos(Vector lista) {
 		if (lista.size() > 0) {
 			for (int i = 0; i < lista.size(); i++) {
@@ -145,12 +146,12 @@ public class OperecoesCliente {
 		int index = procuraID(clientes, id);
 
 		if (index != -1) {
-			Vector compras = ((Cliente) clientes.get(index)).getCompras();//Pega as compras co cliente
+			Vector compras = ((Cliente) clientes.get(index)).getCompras(); // Pega as compras co cliente
 			for (int j = 0; j < compras.size(); j++) {
-				System.out.println(((Compras) compras.get(j)).toString()); // Imprime toda a conta
-				valorTotal += ((Compras) compras.get(j)).getTotal();// Para dizer quanto é que já gastou na loja
+				System.out.print(((Compras) compras.get(j)).toString()); // Imprime toda a conta
+				valorTotal += ((Compras) compras.get(j)).getTotal(); // Para dizer quanto é que já gastou na loja
 			}
-			System.out.println(((Cliente) clientes.get(index)).curtoString()+" já gastou "+valorTotal+",00MT");
+			System.out.println(((Cliente) clientes.get(index)).curtoString() + " já gastou " + valorTotal + ",00MT");
 		} else {
 			System.out.println("Este Cliente não existe");
 		}

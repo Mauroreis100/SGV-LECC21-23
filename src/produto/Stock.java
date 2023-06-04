@@ -6,8 +6,9 @@ import java.util.Scanner;
 import java.util.Vector;
 
 import cliente.Cliente;
+import interfaces.InterfaceOperacoes;
 
-public class Stock {
+public class Stock implements InterfaceOperacoes{
 	/*
 	 * Ao adicionar um produto novo ao STOCK deve - Pegar a lista - Ver se já existe
 	 * com o método existe(nome,lista) - Caso exista, apenas aumenta a quantidade

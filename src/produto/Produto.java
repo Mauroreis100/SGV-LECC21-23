@@ -14,13 +14,7 @@ Para colocar no carrinho, a quantidade muda "Virtualmente"
 Ou seja não fez a mudança necessariamente porque pode remover do carrinho
 que seria devolver o produto a prateleira
 	*/ 
-	public Produto(int id,String nome) {
-		this.id=id;
-		//this.tipo=tipo; Categoria...
-		this.nome=nome;
-		this.qtd=qtd;
-		this.vendas=vendas;
-	}
+
 	public Produto(int id, String nome, int qtd,double preco) {
 		this.id = id;
 		this.nome = nome;
@@ -60,7 +54,7 @@ public void setQtd(int qtd) {
 }
 //String para para imprimir vendas sim é igual ao toString
 public String imprimiVendas() {
-	StringBuilder builder = new StringBuilder();
+	StringBuffer builder = new StringBuffer();
 	builder.append("Produto [id=");
 	builder.append(id);
 	builder.append(", Nome=");
@@ -73,7 +67,7 @@ public String imprimiVendas() {
 
 @Override //String para imprimir as vendas
 public String toString() {
-	StringBuilder builder = new StringBuilder();
+	StringBuffer builder = new StringBuffer();
 	builder.append("Produto [ID=");
 	builder.append(id);
 	builder.append("\t | Nome=");
@@ -90,7 +84,7 @@ public String toString() {
 
 //String para o carrinho, vem sem mostrar as vendas
 public String toCarrinho() {
-	StringBuilder builder = new StringBuilder();
+	StringBuffer builder = new StringBuffer();
 	builder.append("Produto [ID=");
 	builder.append(id);
 	builder.append("\t | Nome=");
@@ -104,7 +98,7 @@ public String toCarrinho() {
 }
 
 public String gravacao() {
-	StringBuilder builder = new StringBuilder();
+	StringBuffer builder = new StringBuffer();
 	builder.append(" ");
 	builder.append(id);
 	builder.append(" ");
