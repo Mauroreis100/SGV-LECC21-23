@@ -9,7 +9,7 @@ import produto.Produto;
 import compras.Compras;
 import interfaces.InterfaceOperacoes;
 
-public class OperecoesCliente implements InterfaceOperacoes{
+public class OperecoesCliente implements InterfaceOperacoes {
 
 	// Método para adicionar cliente
 	public Vector adicionarCliente(Vector lista, Cliente cl) {
